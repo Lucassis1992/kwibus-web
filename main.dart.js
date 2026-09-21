@@ -51330,22 +51330,25 @@ n=a0.c
 if(n==null)n=""
 m=a2.ch
 n=A.W(n,d,d,d,d,A.cw(d,d,m,d,d,d,d,d,"Fredoka",d,d,56,d,d,B.b5,d,d,!0,d,12,d,d,d,d,d,d),d,d)
-l=a1.a==="nl"?"Deel de link":"Share the link"
-k=t.p
-l=A.b([A.hu(d,A.af(A.b([o,B.bt,n,B.a2,A.ae(A.b([A.ar(A.df(!0,B.Vi,l,!1,new A.aLY(e,a0,a1),!0,B.bv),1),B.aG,new A.dF(B.V4,a1.O("online.copied"),new A.aLZ(e,a0,a1),!0,d,d)],k),B.h,d,B.f,B.j,0)],k),B.h,B.f,B.j),a2.e,!0,d,B.aD,22)],k)
+l=a1.a==="nl"
+k=l?"Deel de link":"Share the link"
+k=A.ar(A.df(!0,B.Vi,k,!1,new A.aLY(e,a0,a1),!0,B.bv),1)
+l=l?"Kopieer de link":"Copy the link"
+j=t.p
+l=A.b([A.hu(d,A.af(A.b([o,B.bt,n,B.a2,A.ae(A.b([k,B.aG,new A.dF(B.V4,l,new A.aLZ(e,a0,a1),!0,d,d)],j),B.h,d,B.f,B.j,0)],j),B.h,B.f,B.j),a2.e,!0,d,B.aD,22)],j)
 o=a0.b
-if(!o)B.b.M(l,A.b([B.a2,new A.Kf(a1.O("online.reconnecting"),d)],k))
+if(!o)B.b.M(l,A.b([B.a2,new A.Kf(a1.O("online.reconnecting"),d)],j))
 l.push(B.bs)
 l.push(new A.hj(a1.O("online.players")+" \xb7 "+s,d,d))
-for(n=c.length,j=a0.e,i=a0.d,h=0;h<c.length;c.length===n||(0,A.n)(c),++h){g=c[h]
+for(n=c.length,k=a0.e,i=a0.d,h=0;h<c.length;c.length===n||(0,A.n)(c),++h){g=c[h]
 f=g.a
-B.b.M(l,A.b([new A.a7m(g,B.b.d9(c,g),f===j,f===i,a1,d),B.Z],k))}l.push(B.ay)
-if(i!=null&&i===j){c=A.b([new A.hj(a1.O("online.pickGame"),d,d),new A.ag(d,120,A.amT(d,new A.aM_(e,b,s,q,a2,a1),b.length,d,B.aq,new A.aM0()),d),B.a2],k)
+B.b.M(l,A.b([new A.a7m(g,B.b.d9(c,g),f===k,f===i,a1,d),B.Z],j))}l.push(B.ay)
+if(i!=null&&i===k){c=A.b([new A.hj(a1.O("online.pickGame"),d,d),new A.ag(d,120,A.amT(d,new A.aM_(e,b,s,q,a2,a1),b.length,d,B.aq,new A.aM0()),d),B.a2],j)
 if(r&&!p){r=a1.bX("online.needPlayers",A.V(["min",q.gdQ(),"max",q.gdg()],t.N,t.S))
 n=A.k(a).ok.Q
 c.push(new A.a9(B.tq,A.W(r,d,d,d,d,n==null?d:n.aT(a2.ax),d,d),d))}r=a1.O("online.start")
 c.push(A.df(!0,B.kh,r,!1,p&&o?new A.aM1(e,a,q):d,!1,B.bv))
-B.b.M(l,c)}else B.b.M(l,A.b([A.ae(A.b([new A.ag(18,18,A.ws(m,2),d),B.b_,A.ar(A.W(a1.O("online.waitingHost"),d,d,d,d,A.k(a).ok.y,d,d),1)],k),B.h,d,B.f,B.j,0)],k))
+B.b.M(l,c)}else B.b.M(l,A.b([A.ae(A.b([new A.ag(18,18,A.ws(m,2),d),B.b_,A.ar(A.W(a1.O("online.waitingHost"),d,d,d,d,A.k(a).ok.y,d,d),1)],j),B.h,d,B.f,B.j,0)],j))
 l.push(B.bs)
 l.push(A.df(!0,d,a1.O("online.leave"),!1,new A.aM2(e),!1,B.jj))
 return A.xr(l,d,B.tB,B.O,!1)}}
