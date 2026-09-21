@@ -42,6 +42,17 @@
     For more details:
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
-  <script src="flutter_bootstrap.js" async></script>
+  <script>
+    // Older versions registered a service worker that kept stale builds alive.
+    // The app now relies on normal HTTP revalidation: remove any leftover worker
+    // and its caches so every visit gets the current build.
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); });
+    }
+    if (window.caches) {
+      caches.keys().then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); });
+    }
+  </script>
+  <script src="flutter_bootstrap.js?v=19d8a249bc90" async></script>
 </body>
 </html>
