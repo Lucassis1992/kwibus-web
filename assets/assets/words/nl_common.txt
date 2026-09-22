@@ -389,7 +389,6 @@ bezwaar
 bidden
 bieden
 biefstuk
-bier
 biertje
 bijbel
 bijdrage
@@ -824,7 +823,6 @@ droevig
 droge
 dromen
 dronk
-dronken
 droog
 droom
 drug
@@ -1169,7 +1167,6 @@ gevormd
 gevraagd
 gevuld
 gewapend
-geweer
 geweld
 geweldig
 geweldige
@@ -1459,7 +1456,6 @@ hypotheek
 ideaal
 ideale
 idee
-idioot
 ieder
 iedere
 iedereen
@@ -2503,7 +2499,6 @@ pillen
 piloot
 pissen
 pissig
-pistool
 pizza
 plaag
 plaat
@@ -2666,7 +2661,6 @@ reden
 reed
 reeds
 reeks
-reet
 regel
 regelen
 regeling
@@ -3069,7 +3063,6 @@ stoer
 stof
 stoffen
 stok
-stom
 stomme
 stond
 stoned
@@ -3780,7 +3773,6 @@ wiet
 wijd
 wijf
 wijk
-wijn
 wijs
 wijsheid
 wijze

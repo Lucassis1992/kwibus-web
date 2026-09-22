@@ -288,7 +288,6 @@ been
 beep
 beeping
 beeps
-beer
 before
 began
 begging
@@ -384,8 +383,6 @@ bobby
 bodies
 body
 bold
-bomb
-bombs
 bond
 bone
 bones
@@ -397,7 +394,6 @@ boom
 boot
 booth
 boots
-booze
 border
 bored
 boring
@@ -493,7 +489,6 @@ bust
 busted
 busy
 butcher
-butt
 butter
 button
 buying
@@ -709,7 +704,6 @@ coach
 coal
 coast
 coat
-cocaine
 code
 coffee
 coffin
@@ -1092,7 +1086,6 @@ duck
 dude
 duke
 dull
-dumb
 dummy
 dump
 dumped
@@ -1583,7 +1576,6 @@ guilt
 guilty
 guitar
 gunfire
-guns
 gunshot
 gunshots
 guts
@@ -1665,7 +1657,6 @@ hercules
 here
 hero
 heroes
-heroin
 hers
 herself
 hidden
@@ -1757,7 +1748,6 @@ ideal
 ideas
 identify
 identity
-idiot
 idiots
 idol
 ignore
@@ -2056,7 +2046,6 @@ looks
 loose
 lord
 lose
-loser
 loses
 losing
 loss
@@ -2244,7 +2233,6 @@ moral
 more
 morgan
 morning
-moron
 most
 mostly
 motel
@@ -2635,7 +2623,6 @@ prevent
 previous
 prey
 price
-prick
 pride
 priest
 primary
@@ -3153,8 +3140,6 @@ skip
 skirt
 skull
 slap
-slave
-slaves
 sleep
 sleeping
 slept
@@ -3371,7 +3356,6 @@ study
 studying
 stuff
 stuffed
-stupid
 style
 subject
 subtitles
@@ -3822,7 +3806,6 @@ wearing
 wears
 weather
 wedding
-weed
 week
 weekend
 weeks
@@ -3868,7 +3851,6 @@ willing
 wind
 window
 windows
-wine
 wing
 wings
 winner
