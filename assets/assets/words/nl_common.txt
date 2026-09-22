@@ -594,7 +594,6 @@ clown
 club
 coach
 code
-coke
 cola
 collectie
 collega
@@ -2963,7 +2962,6 @@ speler
 spellen
 spelletje
 spencer
-sperma
 spiegel
 spieren
 spijt
@@ -3142,7 +3140,6 @@ team
 techniek
 technisch
 teddy
-teef
 teen
 tegelijk
 tegemoet

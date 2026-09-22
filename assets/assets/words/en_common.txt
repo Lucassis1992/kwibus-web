@@ -708,7 +708,6 @@ code
 coffee
 coffin
 coin
-coke
 cold
 cole
 colin
@@ -2697,7 +2696,6 @@ purse
 push
 pushed
 pushing
-pussy
 puts
 putting
 quality
