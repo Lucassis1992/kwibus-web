@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Beheer – Kwibus</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta name="theme-color" content="#FFF7EA">
+  <style>
+    @font-face { font-family: 'Lilita One'; src: url(/assets/assets/fonts/LilitaOne.ttf); font-display: swap; }
+    @font-face { font-family: Figtree; src: url(/assets/assets/fonts/Figtree.ttf); font-display: swap; }
+    :root {
+      --paper: #FFF7EA; --card: #FFFFFF; --ink: #1A1030; --soft: #4E4468; --muted: #7C7394;
+      --line: rgba(26, 16, 48, .12); --grid: rgba(26, 16, 48, .08);
+      --violet: #5B3DF5; --violet-soft: rgba(91, 61, 245, .16); --gold: #FFD23F; --gold-ink: #8A5E00;
+      --mint: #1FD39A; --coral: #FF7B7B; --hover: rgba(26, 16, 48, .05);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #1E1547; --card: #2A1F5E; --ink: #FFF7EA; --soft: #CFC7E8; --muted: #9E95C4;
+        --line: rgba(255, 247, 234, .14); --grid: rgba(255, 247, 234, .10);
+        --violet: #A08DFF; --violet-soft: rgba(160, 141, 255, .22); --gold-ink: #FFD23F; --hover: rgba(255, 247, 234, .06);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); }
+    body {
+      margin: 0; color: var(--ink); font: 16px/1.5 Figtree, system-ui, sans-serif;
+      background: radial-gradient(900px 520px at 20% -10%, rgba(247, 194, 68, .10), transparent 70%), var(--paper);
+      min-height: 100vh;
+    }
+    main { max-width: 1040px; margin: 0 auto; padding: 28px 16px 64px; }
+    header { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 20px; }
+    header img { width: 44px; height: 44px; border-radius: 12px; box-shadow: 0 6px 16px rgba(0, 0, 0, .25); }
+    header a.brand { color: inherit; text-decoration: none; font: 400 22px 'Lilita One', system-ui, sans-serif; }
+    header .spacer { flex: 1; }
+    h1 { font: 400 clamp(28px, 5vw, 36px)/1.15 'Lilita One', system-ui, sans-serif; margin: 0 0 4px; }
+    h2 { font: 400 20px/1.3 'Lilita One', system-ui, sans-serif; margin: 0 0 12px; }
+    .sub { color: var(--muted); margin: 0 0 20px; font-size: 15px; }
+    .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; padding: 3px; background: var(--card); }
+    .seg button { border: 0; background: transparent; color: var(--soft); font: 600 14px Figtree, system-ui, sans-serif; padding: 6px 14px; border-radius: 999px; cursor: pointer; min-height: 32px; }
+    .seg button[aria-pressed="true"] { background: var(--violet); color: #fff; }
+    .btn { border: 1px solid var(--line); background: var(--card); color: var(--soft); font: 600 14px Figtree, system-ui, sans-serif; padding: 7px 14px; border-radius: 999px; cursor: pointer; min-height: 36px; }
+    .btn:hover { background: var(--hover); }
+    .btn.gold { background: var(--gold); color: #1A1030; border-color: transparent; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 18px 20px; box-shadow: 0 4px 16px rgba(26, 16, 48, .05); }
+    .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
+    .tile .label { color: var(--muted); font-size: 13px; font-weight: 600; letter-spacing: .01em; }
+    .tile .value { font: 400 32px/1.1 'Lilita One', system-ui, sans-serif; margin: 4px 0 2px; }
+    .tile .note { color: var(--muted); font-size: 13px; }
+    .grid { display: grid; gap: 16px; margin-bottom: 16px; }
+    @media (min-width: 800px) { .grid.two { grid-template-columns: 3fr 2fr; } }
+    table { width: 100%; border-collapse: collapse; font-size: 15px; }
+    th, td { text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+    th { color: var(--muted); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; }
+    td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    tr:hover td { background: var(--hover); }
+    .bar { position: relative; height: 10px; background: var(--grid); border-radius: 4px; min-width: 80px; }
+    .bar i { position: absolute; left: 0; top: 0; bottom: 0; background: var(--violet); border-radius: 4px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 4px; }
+    .chip { font-size: 12px; font-weight: 600; color: var(--soft); background: var(--violet-soft); border-radius: 999px; padding: 2px 8px; white-space: nowrap; }
+    .chip.done { background: rgba(31, 211, 154, .22); }
+    .chip.quiet { background: var(--grid); color: var(--muted); }
+    .empty { color: var(--muted); padding: 24px 0; text-align: center; }
+    .chart { position: relative; width: 100%; }
+    .chart svg { width: 100%; height: 240px; display: block; overflow: visible; }
+    .chart rect.bar-mark { fill: var(--violet); }
+    .chart rect.hit { fill: transparent; cursor: default; }
+    .chart rect.hit:hover + rect.bar-mark, .chart g.col:hover rect.bar-mark { fill: var(--gold-ink); }
+    .chart .grid line { stroke: var(--grid); stroke-width: 1; }
+    .chart text { fill: var(--muted); font: 12px Figtree, system-ui, sans-serif; }
+    .tip { position: absolute; pointer-events: none; background: var(--ink); color: var(--paper); font-size: 13px; line-height: 1.4; padding: 8px 10px; border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .18); transform: translate(-50%, calc(-100% - 10px)); white-space: nowrap; display: none; z-index: 2; }
+    .tip b { font-weight: 700; }
+    form.gate { max-width: 420px; margin: 60px auto; display: grid; gap: 12px; }
+    input[type=password] { font: 16px Figtree, system-ui, sans-serif; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--ink); min-height: 44px; }
+    .err { color: #B3261E; font-weight: 600; }
+    @media (prefers-color-scheme: dark) { .err { color: #FF9B9B; } }
+    .hidden { display: none !important; }
+    .muted { color: var(--muted); }
+    .small { font-size: 13px; }
+    details summary { cursor: pointer; color: var(--muted); font-size: 14px; margin-top: 8px; }
+    @media (max-width: 600px) { .card { padding: 14px; } th, td { padding: 7px 6px; } .hide-sm { display: none; } }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="/icons/Icon-192.png" alt="">
+    <a class="brand" href="/">Kwibus</a>
+    <span class="spacer"></span>
+    <div id="controls" class="hidden" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <div class="seg" role="group" aria-label="Periode">
+        <button data-days="7" aria-pressed="false">7 dagen</button>
+        <button data-days="30" aria-pressed="true">30 dagen</button>
+        <button data-days="90" aria-pressed="false">90 dagen</button>
+      </div>
+      <button class="btn" id="refresh">Vernieuwen</button>
+      <button class="btn" id="logout">Sleutel wissen</button>
+    </div>
+  </header>
+
+  <form class="gate hidden" id="gate">
+    <h1>Beheer</h1>
+    <p class="sub">Voer de beheersleutel in. Die blijft op dit toestel bewaard.</p>
+    <input type="password" id="key" placeholder="Beheersleutel" autocomplete="current-password" required>
+    <button class="btn gold" type="submit">Openen</button>
+    <p class="err hidden" id="gate-err">Die sleutel klopt niet.</p>
+  </form>
+
+  <section id="dash" class="hidden">
+    <h1>Beheer</h1>
+    <p class="sub" id="status">Laden…</p>
+
+    <div class="tiles" id="tiles"></div>
+
+    <div class="grid two">
+      <div class="card">
+        <h2 id="chart-title">Bezoeken per dag</h2>
+        <div class="chart" id="chart"><div class="tip" id="tip"></div></div>
+      </div>
+      <div class="card">
+        <h2>Toestellen</h2>
+        <div id="devices"></div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:16px">
+      <h2>Spellen</h2>
+      <p class="sub small">Gesorteerd op speeltijd. "Af" is het aandeel potjes dat tot het einde gespeeld is.</p>
+      <div id="games"></div>
+    </div>
+
+    <div class="card">
+      <h2>Laatste bezoeken</h2>
+      <p class="sub small">Tijden in jouw tijdzone. Een bezoek is één keer openen van de app of website.</p>
+      <div id="recent"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const KEY = 'kw-beheer-key';
+  let days = 30;
+  let data = null;
+
+  function key() { try { return localStorage.getItem(KEY) || ''; } catch { return ''; } }
+  function setKey(v) { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch {} }
+
+  function showGate(err) {
+    $('#gate').classList.remove('hidden');
+    $('#dash').classList.add('hidden');
+    $('#controls').classList.add('hidden');
+    $('#gate-err').classList.toggle('hidden', !err);
+    setTimeout(() => $('#key').focus(), 0);
+  }
+
+  async function load() {
+    const k = key();
+    if (!k) return showGate(false);
+    $('#gate').classList.add('hidden');
+    $('#dash').classList.remove('hidden');
+    $('#controls').classList.remove('hidden');
+    $('#status').textContent = 'Laden…';
+    let r;
+    try {
+      r = await fetch('/api/beheer?days=' + days, { headers: { 'x-kw-key': k }, cache: 'no-store' });
+    } catch {
+      $('#status').textContent = 'Geen verbinding met de server.';
+      return;
+    }
+    if (r.status === 401) { setKey(''); return showGate(true); }
+    if (!r.ok) { $('#status').textContent = 'De server gaf een fout (' + r.status + ').'; return; }
+    data = await r.json();
+    render();
+  }
+
+  // ---- helpers ----
+  const fmtN = (n) => new Intl.NumberFormat('nl-NL').format(n);
+  function fmtDur(secs) {
+    secs = Math.max(0, Math.round(secs || 0));
+    if (secs < 60) return secs + ' s';
+    const m = Math.floor(secs / 60), h = Math.floor(m / 60);
+    if (h === 0) return m + ' min';
+    if (h < 24) return h + ' u ' + (m % 60) + ' min';
+    const d = Math.floor(h / 24);
+    return d + ' d ' + (h % 24) + ' u';
+  }
+  const dayLabel = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short' });
+  const timeLabel = (ms) => new Date(ms).toLocaleString('nl-NL', { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' });
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const gameName = (id) => (data.names && data.names[id]) || id;
+  const MODES = { solo: 'alleen', bot: 'tegen computer', passAndPlay: 'samen op één toestel', network: 'online' };
+  function device(s) {
+    const w = s.w || 0;
+    const kind = !w ? '' : w < 600 ? 'telefoon' : w < 1024 ? 'tablet' : 'desktop';
+    return { kind, platform: s.platform || 'onbekend' };
+  }
+  function sessionSecs(s) {
+    // Time between the first and last sign of life, at least the sum of its plays.
+    const span = Math.round((s.last - s.first) / 1000);
+    const plays = s.plays.reduce((a, p) => a + (p.secs || 0), 0);
+    return Math.max(span, plays);
+  }
+
+  // ---- render ----
+  function render() {
+    const S = data.sessions;
+    const visitors = new Set(S.map((s) => s.v));
+    const newVisitors = new Set(S.filter((s) => s.new).map((s) => s.v));
+    const plays = S.flatMap((s) => s.plays);
+    const playSecs = plays.reduce((a, p) => a + (p.secs || 0), 0);
+    const totalSecs = S.reduce((a, s) => a + sessionSecs(s), 0);
+    const todaySessions = S.filter((s) => s.day === data.today);
+    const todayVisitors = new Set(todaySessions.map((s) => s.v)).size;
+
+    $('#status').textContent = S.length === 0
+      ? 'Nog niets gemeten in deze periode. Zodra iemand de website opent, verschijnt het hier.'
+      : 'Laatste ' + data.days + ' dagen, tot en met vandaag. Ververst op ' + new Date().toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' }) + '.';
+
+    $('#tiles').innerHTML = [
+      tile('Bezoekers', fmtN(visitors.size), newVisitors.size + ' nieuw · vandaag ' + todayVisitors),
+      tile('Bezoeken', fmtN(S.length), S.length ? 'gem. ' + fmtDur(totalSecs / S.length) + ' per bezoek' : ''),
+      tile('Potjes geopend', fmtN(plays.length), plays.length ? Math.round(100 * plays.filter((p) => p.finished).length / plays.length) + '% uitgespeeld' : ''),
+      tile('Speeltijd', fmtDur(playSecs), plays.length ? 'gem. ' + fmtDur(playSecs / plays.length) + ' per potje' : ''),
+      tile('Terugkerend', fmtN([...visitors].filter((v) => S.filter((s) => s.v === v).length > 1).length), 'bezoekers met meer dan één bezoek'),
+    ].join('');
+
+    renderChart(S);
+    renderDevices(S);
+    renderGames(plays);
+    renderRecent(S);
+  }
+
+  function tile(label, value, note) {
+    return '<div class="card tile"><div class="label">' + esc(label) + '</div><div class="value">' + esc(value) + '</div><div class="note">' + esc(note) + '</div></div>';
+  }
+
+  function renderChart(S) {
+    const dates = [];
+    for (let i = data.days - 1; i >= 0; i--) dates.push(new Date(Date.now() - i * 86400000).toISOString().slice(0, 10));
+    const byDay = new Map(dates.map((d) => [d, { sessions: 0, visitors: new Set(), plays: 0, secs: 0 }]));
+    for (const s of S) {
+      const d = byDay.get(s.day); if (!d) continue;
+      d.sessions++; d.visitors.add(s.v); d.plays += s.plays.length; d.secs += s.plays.reduce((a, p) => a + (p.secs || 0), 0);
+    }
+    const rows = dates.map((d) => ({ d, ...byDay.get(d) }));
+    const max = Math.max(1, ...rows.map((r) => r.sessions));
+    const W = 600, H = 240, padL = 28, padB = 26, padT = 10;
+    const iw = W - padL, ih = H - padB - padT;
+    const gap = 2, bw = Math.max(2, iw / rows.length - gap);
+    const step = Math.max(1, Math.ceil(max / 4));
+    const ticks = []; for (let v = 0; v <= max; v += step) ticks.push(v);
+    const y = (v) => padT + ih - (v / (ticks[ticks.length - 1] || 1)) * ih;
+    let svg = '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Bezoeken per dag"><g class="grid">';
+    for (const t of ticks) svg += '<line x1="' + padL + '" x2="' + W + '" y1="' + y(t) + '" y2="' + y(t) + '"/><text x="' + (padL - 6) + '" y="' + (y(t) + 4) + '" text-anchor="end">' + t + '</text>';
+    svg += '</g>';
+    const labelEvery = rows.length > 45 ? 14 : rows.length > 10 ? 7 : 1;
+    rows.forEach((r, i) => {
+      const x = padL + i * (iw / rows.length);
+      const h = Math.max(r.sessions ? 3 : 0, (r.sessions / (ticks[ticks.length - 1] || 1)) * ih);
+      svg += '<g class="col" data-i="' + i + '"><rect class="hit" x="' + x + '" y="' + padT + '" width="' + (bw + gap) + '" height="' + ih + '"/>';
+      svg += '<rect class="bar-mark" x="' + (x + gap / 2) + '" y="' + (padT + ih - h) + '" width="' + bw + '" height="' + h + '" rx="' + Math.min(4, bw / 2) + '"/></g>';
+      if (i % labelEvery === 0 || i === rows.length - 1) {
+        svg += '<text x="' + (x + bw / 2) + '" y="' + (H - 8) + '" text-anchor="middle">' + esc(new Date(r.d + 'T12:00:00').toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' })) + '</text>';
+      }
+    });
+    svg += '</svg>';
+    const chart = $('#chart');
+    chart.innerHTML = svg + '<div class="tip" id="tip"></div>';
+    const tip = $('#tip');
+    chart.querySelectorAll('g.col').forEach((g) => {
+      g.addEventListener('mouseenter', (e) => {
+        const r = rows[+g.dataset.i];
+        tip.innerHTML = '<b>' + esc(dayLabel(r.d)) + '</b><br>' + r.sessions + ' bezoeken · ' + r.visitors.size + ' bezoekers<br>' + r.plays + ' potjes · ' + esc(fmtDur(r.secs));
+        const box = chart.getBoundingClientRect(), bb = g.querySelector('.bar-mark').getBoundingClientRect();
+        tip.style.left = (bb.left + bb.width / 2 - box.left) + 'px';
+        tip.style.top = (bb.top - box.top) + 'px';
+        tip.style.display = 'block';
+      });
+      g.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
+    });
+  }
+
+  function renderDevices(S) {
+    const count = (fn) => {
+      const m = new Map();
+      for (const s of S) { const k = fn(s) || 'onbekend'; m.set(k, (m.get(k) || 0) + 1); }
+      return [...m.entries()].sort((a, b) => b[1] - a[1]);
+    };
+    const groups = [
+      ['Soort', count((s) => device(s).kind)],
+      ['Platform', count((s) => s.platform)],
+      ['Taal', count((s) => s.lang)],
+    ];
+    if (!S.length) { $('#devices').innerHTML = '<p class="empty">Nog geen bezoeken.</p>'; return; }
+    $('#devices').innerHTML = groups.map(([title, rows]) => '<table><thead><tr><th>' + esc(title) + '</th><th class="num">Bezoeken</th><th class="num">Aandeel</th></tr></thead><tbody>' +
+      rows.map(([k, n]) => '<tr><td>' + esc(k) + '</td><td class="num">' + n + '</td><td class="num">' + Math.round(100 * n / S.length) + '%</td></tr>').join('') +
+      '</tbody></table>').join('<div style="height:12px"></div>');
+  }
+
+  function renderGames(plays) {
+    if (!plays.length) { $('#games').innerHTML = '<p class="empty">Nog geen potjes geopend.</p>'; return; }
+    const m = new Map();
+    for (const p of plays) {
+      let g = m.get(p.game);
+      if (!g) { g = { id: p.game, plays: 0, secs: 0, finished: 0, won: 0, lost: 0, modes: {}, daily: 0 }; m.set(p.game, g); }
+      g.plays++; g.secs += p.secs || 0; if (p.finished) g.finished++;
+      if (p.won === true) g.won++; if (p.won === false) g.lost++;
+      g.modes[p.mode] = (g.modes[p.mode] || 0) + 1; if (p.daily) g.daily++;
+    }
+    const rows = [...m.values()].sort((a, b) => b.secs - a.secs || b.plays - a.plays);
+    const max = Math.max(1, ...rows.map((r) => r.secs));
+    $('#games').innerHTML = '<table><thead><tr><th>Spel</th><th class="num">Potjes</th><th>Speeltijd</th><th class="num hide-sm">Gem. duur</th><th class="num">Af</th><th class="hide-sm">Hoe gespeeld</th></tr></thead><tbody>' +
+      rows.map((r) => {
+        const modes = Object.entries(r.modes).sort((a, b) => b[1] - a[1]).map(([k, n]) => '<span class="chip quiet">' + esc(MODES[k] || k) + ' ' + n + '</span>').join('');
+        const daily = r.daily ? '<span class="chip quiet">dagpuzzel ' + r.daily + '</span>' : '';
+        return '<tr><td><b>' + esc(gameName(r.id)) + '</b></td><td class="num">' + r.plays + '</td>' +
+          '<td><div style="display:flex;align-items:center;gap:8px"><div class="bar" style="flex:1"><i style="width:' + Math.max(2, 100 * r.secs / max) + '%"></i></div><span class="small" style="min-width:56px;text-align:right;font-variant-numeric:tabular-nums">' + esc(fmtDur(r.secs)) + '</span></div></td>' +
+          '<td class="num hide-sm">' + esc(fmtDur(r.secs / r.plays)) + '</td><td class="num">' + Math.round(100 * r.finished / r.plays) + '%</td>' +
+          '<td class="hide-sm"><div class="chips">' + modes + daily + '</div></td></tr>';
+      }).join('') + '</tbody></table>';
+  }
+
+  function renderRecent(S) {
+    if (!S.length) { $('#recent').innerHTML = '<p class="empty">Nog geen bezoeken.</p>'; return; }
+    const rows = [...S].sort((a, b) => b.first - a.first).slice(0, 40);
+    $('#recent').innerHTML = '<table><thead><tr><th>Wanneer</th><th class="hide-sm">Toestel</th><th class="num">Duur</th><th>Gespeeld</th></tr></thead><tbody>' +
+      rows.map((s) => {
+        const d = device(s);
+        const who = (s.new ? 'nieuw · ' : '') + [d.kind, d.platform, s.lang].filter(Boolean).join(' · ') + (s.w ? ' · ' + s.w + '×' + s.h : '');
+        const chips = s.plays.length ? s.plays.map((p) => '<span class="chip' + (p.finished ? ' done' : '') + '" title="' + esc(MODES[p.mode] || p.mode || '') + '">' + esc(gameName(p.game)) + ' ' + esc(fmtDur(p.secs)) + (p.won === true ? ' ✓' : '') + '</span>').join('') : '<span class="muted small">alleen rondgekeken</span>';
+        return '<tr><td style="white-space:nowrap">' + esc(timeLabel(s.first)) + '</td><td class="hide-sm small muted">' + esc(who) + '</td><td class="num">' + esc(fmtDur(sessionSecs(s))) + '</td><td><div class="chips">' + chips + '</div></td></tr>';
+      }).join('') + '</tbody></table>' +
+      '<p class="small muted" style="margin:10px 0 0">Groen = uitgespeeld, ✓ = gewonnen. Ieder toestel krijgt een willekeurig nummer; wie het is, weten we niet.</p>';
+  }
+
+  // ---- wiring ----
+  $('#gate').addEventListener('submit', (e) => { e.preventDefault(); setKey($('#key').value.trim()); $('#key').value = ''; load(); });
+  $('#refresh').addEventListener('click', load);
+  $('#logout').addEventListener('click', () => { setKey(''); showGate(false); });
+  document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => {
+    days = +b.dataset.days;
+    document.querySelectorAll('.seg button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    load();
+  }));
+  load();
+})();
+</script>
+</body>
+</html>

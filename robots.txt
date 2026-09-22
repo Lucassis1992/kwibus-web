@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /beheer
+Disallow: /api/
 
 Sitemap: https://kwibus.online/sitemap.xml
