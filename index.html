@@ -32,8 +32,58 @@
 
   <title>Kwibus</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Start the heavy downloads right away instead of after the bootstrap
+       script has run: the renderer comes from gstatic, the app script is
+       preloaded (the deploy script points this at the versioned file). -->
+  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <link rel="preload" href="main.cfe2c6f714bf.dart.js" as="script">
+
+  <style>
+    html, body { margin: 0; height: 100%; background: #1B3843; }
+    /* Shown from the first byte until Flutter paints its first frame. */
+    #kw-splash {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 22px;
+      background: #1B3843; transition: opacity 220ms ease-out; z-index: 10;
+    }
+    #kw-splash.gone { opacity: 0; pointer-events: none; }
+    #kw-splash img {
+      width: 96px; height: 96px; border-radius: 24px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, .28);
+      animation: kw-bob 1.4s ease-in-out infinite;
+    }
+    #kw-splash .dots { display: flex; gap: 8px; }
+    #kw-splash .dots i {
+      width: 8px; height: 8px; border-radius: 50%; background: #F7F1E3; opacity: .3;
+      animation: kw-dot 1.2s ease-in-out infinite;
+    }
+    #kw-splash .dots i:nth-child(2) { animation-delay: .15s; }
+    #kw-splash .dots i:nth-child(3) { animation-delay: .3s; }
+    @keyframes kw-bob { 50% { transform: translateY(-6px) rotate(-3deg); } }
+    @keyframes kw-dot { 40% { opacity: 1; transform: translateY(-3px); } }
+    @media (prefers-reduced-motion: reduce) {
+      #kw-splash img, #kw-splash .dots i { animation: none; }
+    }
+  </style>
 </head>
 <body>
+  <div id="kw-splash" aria-label="Kwibus laadt" role="progressbar">
+    <img src="icons/Icon-192.png" alt="">
+    <div class="dots"><i></i><i></i><i></i></div>
+  </div>
+  <script>
+    (function () {
+      var hide = function () {
+        var el = document.getElementById('kw-splash');
+        if (!el) return;
+        el.classList.add('gone');
+        setTimeout(function () { el.remove(); }, 300);
+      };
+      window.addEventListener('flutter-first-frame', hide, { once: true });
+      setTimeout(hide, 20000); // never cover the app for good
+    })();
+  </script>
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
