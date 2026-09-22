@@ -33,11 +33,11 @@
   <title>Kwibus</title>
   <link rel="manifest" href="manifest.json">
 
-  <!-- Start the heavy downloads right away instead of after the bootstrap
-       script has run: the renderer comes from gstatic, the app script is
-       preloaded (the deploy script points this at the versioned file). -->
+  <!-- Start the renderer download right away: it comes from gstatic. The
+       app itself is not preloaded: the bootstrap picks the WebAssembly or
+       the JavaScript build, and preloading one would waste the other's
+       bandwidth on a phone. -->
   <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
-  <link rel="preload" href="main.386693081981.dart.js" as="script">
 
   <style>
     html, body { margin: 0; height: 100%; background: #1B3843; }
@@ -103,6 +103,19 @@
       caches.keys().then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); });
     }
   </script>
-  <script src="flutter_bootstrap.js?v=386693081981" async></script>
+  <script>
+    // Flutter paints every pixel itself. A phone at 3x pixels makes it paint
+    // 2.25 times as many as at 2x, for a difference you cannot see at arm's
+    // length; on a phone's GPU that is the gap between smooth and stutter.
+    // So the app renders at most at 2x.
+    (function () {
+      if ((window.devicePixelRatio || 1) > 2) {
+        try {
+          Object.defineProperty(window, 'devicePixelRatio', { get: function () { return 2; }, configurable: true });
+        } catch (e) {}
+      }
+    })();
+  </script>
+  <script src="flutter_bootstrap.js?v=220504cad5a1" async></script>
 </body>
 </html>
