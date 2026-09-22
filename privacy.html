@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Privacy – Kwibus</title>
+  <meta name="description" content="Wat Kwibus wel en niet met je gegevens doet: geen account, geen reclame, geen tracking.">
+  <link rel="canonical" href="https://kwibus.online/privacy">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta name="theme-color" content="#FFF7EA">
+  <style>
+    @font-face { font-family: 'Lilita One'; src: url(/assets/assets/fonts/LilitaOne.ttf); font-display: swap; }
+    @font-face { font-family: Figtree; src: url(/assets/assets/fonts/Figtree.ttf); font-display: swap; }
+    :root { --paper: #FFF7EA; --deep: #F7EBD6; --ink: #1A1030; --soft: #4E4468; --gold: #8A5E00; --line: rgba(26, 16, 48, .14); }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper: #1E1547; --deep: #150E33; --ink: #FFF7EA; --soft: #CFC7E8; --gold: #FFD23F; --line: rgba(255, 247, 234, .14); }
+    }
+    * { box-sizing: border-box; }
+    html { background: var(--paper); }
+    body {
+      margin: 0; color: var(--ink); font: 17px/1.6 Figtree, system-ui, sans-serif;
+      background: radial-gradient(900px 520px at 20% -10%, rgba(247, 194, 68, .10), transparent 70%), var(--paper);
+      min-height: 100vh;
+    }
+    main { max-width: 680px; margin: 0 auto; padding: 40px 16px 64px; }
+    header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; }
+    header img { width: 52px; height: 52px; border-radius: 14px; box-shadow: 0 6px 16px rgba(0, 0, 0, .25); }
+    header a { color: inherit; text-decoration: none; font: 400 22px 'Lilita One', system-ui, sans-serif; }
+    h1 { font: 400 clamp(30px, 6vw, 40px)/1.15 'Lilita One', system-ui, sans-serif; margin: 0 0 12px; }
+    h2 { font: 400 22px/1.3 'Lilita One', system-ui, sans-serif; margin: 36px 0 8px; }
+    p, li { color: var(--soft); }
+    strong { color: var(--ink); font-weight: 700; }
+    ul { padding-left: 20px; }
+    li { margin: 6px 0; }
+    a { color: var(--gold); }
+    .lead { font-size: 19px; color: var(--ink); }
+    .lang { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--line); }
+    footer { margin-top: 48px; font-size: 15px; }
+  </style>
+</head>
+<body>
+<main>
+  <header>
+    <img src="/icons/Icon-192.png" alt="">
+    <a href="/">Kwibus</a>
+  </header>
+
+  <h1>Privacy</h1>
+  <p class="lead">Kwibus heeft geen account, geen reclame en geen tracking. We willen niets van je weten; je speelt gewoon.</p>
+
+  <h2>Wat op je eigen toestel blijft</h2>
+  <p>Je instellingen, je opgeslagen potjes en je statistieken staan alleen op je eigen toestel (in de app, of op de website in de opslag van je browser). Ze gaan nergens heen. Wil je ze kwijt, verwijder dan de app of wis de websitegegevens van kwibus.online in je browser.</p>
+
+  <h2>De website</h2>
+  <ul>
+    <li>Kwibus gebruikt <strong>geen cookies</strong>, geen analytics en geen advertentienetwerken.</li>
+    <li>De website draait bij hostingbedrijf <strong>Vercel</strong>. Zoals elke webserver ziet Vercel bij een bezoek je IP-adres en welk bestand je opvraagt; dat is nodig om de pagina te sturen en tegen misbruik te beschermen. Kwibus zelf krijgt of bewaart die gegevens niet.</li>
+    <li>De app en de lettertypen komen van deze website zelf. Alleen als je tekens gebruikt die niet in onze lettertypen zitten (bijvoorbeeld een emoji in een spelersnaam), haalt de website een extra lettertype op bij Google Fonts. Google ziet dan je IP-adres.</li>
+    <li>Om ook zonder verbinding te werken bewaart je browser een kopie van de app op je toestel. Die kopie blijft op je toestel.</li>
+  </ul>
+
+  <h2>Online spelen</h2>
+  <p>Speel je online met een kamercode, dan loopt dat zonder eigen server via <strong>openbare berichtenservers</strong> (MQTT, van EMQX en HiveMQ). Wat daarover gaat:</p>
+  <ul>
+    <li>de kamercode, de namen die jullie invullen en de stand van het spel;</li>
+    <li>de laatste stand blijft op die server staan tot hij wordt overschreven, zodat wie opnieuw verbindt verder kan.</li>
+  </ul>
+  <p>Die servers zijn openbaar: wie de kamercode kent, kan in principe meelezen. Vul dus geen gegevens in die je niet wilt delen; een bijnaam is prima. Deze servers zien ook je IP-adres. Offline spelen en spelen op één toestel gebruiken geen enkele server.</p>
+
+  <h2>Kinderen</h2>
+  <p>Kwibus vraagt niemand om persoonlijke gegevens, ook kinderen niet. Er is geen chat en er zijn geen advertenties of aankopen in de website.</p>
+
+  <h2>Wijzigingen</h2>
+  <p>Verandert er iets aan hoe Kwibus met gegevens omgaat, dan staat dat op deze pagina. Laatst bijgewerkt: 22 september 2026.</p>
+
+  <section class="lang" lang="en">
+    <h2>In English</h2>
+    <p>Kwibus has no accounts, no ads and no tracking. Your settings, saved games and statistics stay on your own device (in the app, or in your browser's storage on the website). The website uses no cookies and no analytics; it is hosted by Vercel, which, like any web server, sees your IP address when it sends you a page. The app and its fonts come from this site itself; only characters our fonts lack (such as an emoji in a player name) make the website fetch an extra font from Google Fonts. To work offline, your browser keeps a copy of the app on your device.</p>
+    <p>Online play with a room code runs over <strong>public MQTT message servers</strong> (EMQX and HiveMQ): the room code, the names you enter and the game state travel through them, and the latest state stays there until it is overwritten. Anyone who knows the room code could read along, so use a nickname. Offline play and playing on one device use no server at all.</p>
+  </section>
+
+  <footer><a href="/">Terug naar Kwibus</a></footer>
+</main>
+</body>
+</html>

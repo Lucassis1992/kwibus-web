@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Niet gevonden – Kwibus</title>
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <meta name="theme-color" content="#FFF7EA">
+  <style>
+    @font-face { font-family: 'Lilita One'; src: url(/assets/assets/fonts/LilitaOne.ttf); font-display: swap; }
+    @font-face { font-family: Figtree; src: url(/assets/assets/fonts/Figtree.ttf); font-display: swap; }
+    :root { --paper: #FFF7EA; --ink: #1A1030; --soft: #4E4468; --gold: #FFD23F; --gold-edge: #C9A11E; --on-gold: #1A1030; }
+    @media (prefers-color-scheme: dark) {
+      :root { --paper: #1E1547; --ink: #FFF7EA; --soft: #CFC7E8; }
+    }
+    html { background: var(--paper); }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      color: var(--ink); font: 17px/1.55 Figtree, system-ui, sans-serif; text-align: center;
+      background: radial-gradient(800px 500px at 30% 10%, rgba(247, 194, 68, .10), transparent 70%), var(--paper);
+    }
+    main { max-width: 440px; padding: 32px 16px; }
+    img { width: 96px; height: 96px; border-radius: 24px; box-shadow: 0 10px 28px rgba(0, 0, 0, .28); transform: rotate(-6deg); }
+    h1 { font: 400 34px/1.15 'Lilita One', system-ui, sans-serif; margin: 28px 0 8px; }
+    p { color: var(--soft); margin: 0 0 28px; }
+    a.button {
+      display: inline-block; padding: 14px 26px; border-radius: 16px; text-decoration: none;
+      background: var(--gold); color: var(--on-gold); font: 400 19px 'Lilita One', system-ui, sans-serif;
+      box-shadow: 0 4px 0 var(--gold-edge);
+    }
+    a.button:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--gold-edge); }
+    a.button:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  </style>
+</head>
+<body>
+<main>
+  <img src="/icons/Icon-192.png" alt="">
+  <h1>Deze pagina bestaat niet</h1>
+  <p>Misschien is de link verkeerd overgenomen. Alle spellen staan gewoon in de spellenkast.</p>
+  <a class="button" href="/">Naar de spellenkast</a>
+</main>
+</body>
+</html>

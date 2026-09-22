@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="nl">
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -19,13 +19,31 @@
   <meta charset="UTF-8">
   <meta name="theme-color" content="#FFF7EA">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Klassieke spellen die volledig offline werken. Geen advertenties.">
+  <meta name="description" content="Klassieke spellen die altijd werken, ook zonder wifi: puzzels, woord-, kaart-, bord- en gezelschapsspellen. Samen op één telefoon, tegen de computer of online. Geen reclame, geen account.">
+  <link rel="canonical" href="https://kwibus.online/">
+
+  <!-- Link previews (WhatsApp, iMessage, socials): an invite link shows a card. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Kwibus">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:locale:alternate" content="en_GB">
+  <meta property="og:url" content="https://kwibus.online/">
+  <meta property="og:title" content="Kwibus – speel mee">
+  <meta property="og:description" content="Klassieke spellen die altijd werken, ook zonder wifi. Samen op één telefoon, tegen de computer of online. Geen reclame, geen account.">
+  <meta property="og:image" content="https://kwibus.online/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Kwibus: klassieke spellen, altijd offline">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Kwibus – speel mee">
+  <meta name="twitter:description" content="Klassieke spellen die altijd werken, ook zonder wifi. Geen reclame, geen account.">
+  <meta name="twitter:image" content="https://kwibus.online/og-image.png">
 
   <!-- iOS meta tags & icons -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Kwibus">
-  <link rel="apple-touch-icon" href="icons/Icon-maskable-192.png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
@@ -33,11 +51,9 @@
   <title>Kwibus</title>
   <link rel="manifest" href="manifest.json">
 
-  <!-- Start the renderer download right away: it comes from gstatic. The
-       app itself is not preloaded: the bootstrap picks the WebAssembly or
-       the JavaScript build, and preloading one would waste the other's
-       bandwidth on a phone. -->
-  <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+  <!-- The app script is not preloaded: the bootstrap picks the WebAssembly
+       or the JavaScript build, and preloading one would waste the other's
+       bandwidth on a phone. The renderer is served from this site itself. -->
 
   <style>
     html, body { margin: 0; height: 100%; background: #FFF7EA; }
@@ -62,12 +78,34 @@
     #kw-splash .dots i:nth-child(3) { animation-delay: .3s; }
     @keyframes kw-bob { 50% { transform: translateY(-6px) rotate(-3deg); } }
     @keyframes kw-dot { 40% { opacity: 1; transform: translateY(-3px); } }
+    html.kw-dark, html.kw-dark body, html.kw-dark #kw-splash { background: #1E1547; }
+    html.kw-dark #kw-splash .dots i { background: #FFD23F; }
     @media (prefers-reduced-motion: reduce) {
       #kw-splash svg, #kw-splash .dots i { animation: none; }
     }
   </style>
 </head>
 <body>
+  <script>
+    // Match the splash to the theme the app will open in, so a night-theme
+    // player gets no cream flash. Settings live in localStorage (shared_preferences).
+    (function () {
+      try {
+        var raw = localStorage.getItem('flutter.settings');
+        var mode = raw ? JSON.parse(JSON.parse(raw)).themeMode : 'light';
+        var dark = mode === 'dark' || (mode === 'system' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
+        if (dark) document.documentElement.classList.add('kw-dark');
+      } catch (e) {}
+    })();
+  </script>
+  <noscript>
+    <main style="max-width:640px;margin:40px auto;padding:0 16px;font:16px/1.5 system-ui,sans-serif;color:#1A1030">
+      <h1>Kwibus</h1>
+      <p>Klassieke spellen die altijd werken, ook zonder wifi: puzzels, woord-, kaart-, bord- en gezelschapsspellen. Speel alleen, samen op één telefoon, tegen de computer of online met een kamercode. Geen reclame, geen account.</p>
+      <p>Kwibus heeft JavaScript nodig. Zet JavaScript aan om te spelen.</p>
+      <p><a style="color:#5B3DF5" href="/privacy">Privacy</a></p>
+    </main>
+  </noscript>
   <div id="kw-splash" aria-label="Kwibus laadt" role="progressbar">
     <svg viewBox="0 0 100 100" aria-hidden="true"><path d="M50 10c-2-6-6-8-10-7M52 9c1-5 4-8 8-8M47 11c-1-4 0-7 2-9" fill="none" stroke="#1A1030" stroke-width="4" stroke-linecap="round"/><path d="M50 12c26 0 40 16 40 38 0 22-14 40-40 40S10 72 10 50c0-22 14-38 40-38z" fill="#FFD23F" stroke="#1A1030" stroke-width="4"/><circle cx="34" cy="45" r="5.5" fill="#1A1030"/><path d="M58 39l12 12M70 39L58 51" stroke="#1A1030" stroke-width="5.5" stroke-linecap="round"/><path d="M30 63c8 16 30 18 42 0z" fill="#FFF7EA" stroke="#1A1030" stroke-width="4.5" stroke-linejoin="round"/><path d="M44 73c4 6 12 6 16 0-1 4-3 8-8 8s-7-4-8-8z" fill="#FF6B2C" stroke="#1A1030" stroke-width="3" stroke-linejoin="round"/><circle cx="22" cy="62" r="5" fill="#FF6B2C" opacity=".55"/><circle cx="80" cy="60" r="5" fill="#FF6B2C" opacity=".55"/></svg>
     <div class="dots"><i></i><i></i><i></i></div>
@@ -93,14 +131,32 @@
     * https://docs.flutter.dev/platform-integration/web/initialization
   -->
   <script>
-    // Older versions registered a service worker that kept stale builds alive.
-    // The app now relies on normal HTTP revalidation: remove any leftover worker
-    // and its caches so every visit gets the current build.
+    // Offline: sw.js keeps the last build this device saw, as a fallback only
+    // (online everything still revalidates, see the comment in sw.js).
+    // Flutter's own worker from older builds kept stale builds alive; it is
+    // removed here and its caches are dropped by sw.js on activation.
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.getRegistrations().then(function (rs) { rs.forEach(function (r) { r.unregister(); }); });
-    }
-    if (window.caches) {
-      caches.keys().then(function (ks) { ks.forEach(function (k) { caches.delete(k); }); });
+      navigator.serviceWorker.getRegistrations().then(function (rs) {
+        rs.forEach(function (r) {
+          var w = r.active || r.waiting || r.installing;
+          if (w && !/\/sw\.js(\?|$)/.test(w.scriptURL)) r.unregister();
+        });
+      });
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () {});
+      });
+      // What loaded before the worker took over (the first visit): hand the
+      // list over so the renderer and fonts are there offline too.
+      window.addEventListener('flutter-first-frame', function () {
+        setTimeout(function () {
+          navigator.serviceWorker.ready.then(function (reg) {
+            var urls = performance.getEntriesByType('resource')
+              .map(function (e) { return e.name; })
+              .filter(function (u) { return u.indexOf(location.origin) === 0; });
+            if (reg.active) reg.active.postMessage({ type: 'kw-cache', urls: urls });
+          });
+        }, 4000);
+      }, { once: true });
     }
   </script>
   <script>
@@ -123,6 +179,6 @@
       } catch (e) {}
     })();
   </script>
-  <script src="flutter_bootstrap.js?v=92954ef84368" async></script>
+  <script src="flutter_bootstrap.js?v=0a5d67f4e6f4" async></script>
 </body>
 </html>
