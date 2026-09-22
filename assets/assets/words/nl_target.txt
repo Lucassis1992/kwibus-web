@@ -39,7 +39,6 @@ amber
 amigo
 amper
 ampul
-anaal
 ander
 angel
 angst
@@ -159,7 +158,6 @@ blond
 blonk
 bloot
 blues
-board
 bobby
 bocht
 bodem
@@ -178,7 +176,6 @@ boort
 boost
 boots
 boren
-borst
 bosje
 boten
 boter
@@ -186,15 +183,12 @@ botje
 botox
 botte
 boven
-bowls
 boxen
 boxer
 braaf
-braak
 brace
 brand
 bravo
-break
 breed
 breek
 brein
@@ -231,7 +225,6 @@ candy
 canon
 cargo
 casus
-catch
 cavia
 ceder
 cello
@@ -240,7 +233,6 @@ check
 chemo
 chick
 chili
-chill
 chimp
 chino
 chips
@@ -273,8 +265,6 @@ cover
 crack
 crank
 crash
-crawl
-crazy
 credo
 crime
 crisp
@@ -294,7 +284,6 @@ daken
 dalen
 damar
 dames
-dance
 dandy
 danig
 darts
@@ -327,16 +316,13 @@ diens
 diepe
 dijen
 dikte
-dildo
 dinar
 diner
 dingo
 disco
 divan
 dixie
-dizzy
 djinn
-doden
 doder
 dogma
 doken
@@ -379,7 +365,6 @@ drong
 dronk
 droog
 droom
-drugs
 druif
 drums
 dummy
@@ -419,7 +404,6 @@ engel
 enige
 enkel
 enorm
-enter
 enzym
 eraan
 erbij
@@ -450,7 +434,6 @@ farao
 farce
 fasen
 fases
-fatwa
 fauna
 faxen
 feeks
@@ -492,7 +475,6 @@ frame
 franc
 frank
 freak
-fries
 friet
 frigo
 frons
@@ -583,7 +565,6 @@ graan
 graat
 grauw
 grave
-green
 greep
 grens
 griek
@@ -617,7 +598,6 @@ halte
 halve
 hamas
 hamer
-hands
 handy
 hapje
 happy
@@ -632,7 +612,6 @@ haven
 haver
 havik
 hazen
-heavy
 hecht
 heden
 heeft
@@ -650,7 +629,6 @@ heten
 hevig
 hield
 hielp
-hints
 hitte
 hobby
 hoede
@@ -723,9 +701,6 @@ jeans
 jemig
 jeugd
 jicht
-jihad
-jodin
-joint
 joker
 jonas
 jonge
@@ -776,8 +751,6 @@ keten
 keuze
 kever
 kille
-kinds
-kinky
 kiosk
 klaar
 klaas
@@ -800,8 +773,6 @@ klomp
 klonk
 kloof
 kloon
-kloot
-klote
 kluif
 kluis
 kluns
@@ -812,7 +783,6 @@ kneus
 knijp
 knoei
 knoop
-knots
 koala
 kocht
 koers
@@ -896,10 +866,8 @@ lager
 lakei
 laken
 lamme
-lands
 lange
 langs
-large
 largo
 larie
 larve
@@ -947,7 +915,6 @@ loket
 lolly
 lonen
 loods
-loops
 lopen
 loper
 loser
@@ -957,13 +924,11 @@ lotje
 lotto
 lotus
 loven
-lover
 lozen
 lucht
 lucky
 luide
 luier
-lullo
 lumen
 lunch
 lupus
@@ -1039,9 +1004,7 @@ moker
 mokka
 molen
 monde
-money
 moois
-moord
 morel
 moren
 mores
@@ -1053,7 +1016,6 @@ motto
 mungo
 musea
 mythe
-naakt
 naald
 naast
 nabij
@@ -1063,13 +1025,11 @@ nadat
 nader
 nadir
 nagel
-nakie
 namen
 nanny
 natie
 navel
 negen
-neger
 nemen
 nerts
 netto
@@ -1112,7 +1072,6 @@ oogst
 opdat
 opera
 ophef
-opium
 oppas
 opper
 oprit
@@ -1122,7 +1081,6 @@ opzij
 oraal
 order
 orgel
-orgie
 otter
 ouder
 oudje
@@ -1139,8 +1097,6 @@ palet
 panda
 panel
 panne
-panty
-paper
 pappa
 parel
 paren
@@ -1156,7 +1112,6 @@ pater
 patio
 pauze
 pence
-penis
 penny
 peper
 peren
@@ -1183,7 +1138,6 @@ plots
 pluim
 pluis
 poema
-poets
 poker
 polio
 polis
@@ -1191,11 +1145,9 @@ polka
 poort
 popel
 poppy
-porno
 porto
 poten
 potje
-power
 praal
 praat
 preek
@@ -1225,7 +1177,6 @@ puppy
 puree
 quark
 quota
-quote
 rabbi
 racen
 racer
@@ -1249,8 +1200,6 @@ ratio
 raven
 rayon
 razen
-reach
-ready
 rebel
 reces
 recht
@@ -1268,7 +1217,6 @@ rente
 repel
 repen
 reset
-reten
 retro
 reuma
 reuze
@@ -1291,7 +1239,6 @@ romig
 ronde
 ronin
 rooie
-rooms
 rotje
 rotor
 rotte
@@ -1316,7 +1263,6 @@ salut
 salvo
 samba
 samen
-sarin
 satan
 sauna
 scala
@@ -1343,7 +1289,6 @@ scope
 score
 scout
 sedan
-sekse
 sekte
 serge
 serie
@@ -1356,14 +1301,12 @@ shell
 shift
 shirt
 shock
-short
 shunt
 siena
 sigma
 sinas
 sinds
 sinus
-sissy
 sjaak
 sjaal
 sjans
@@ -1400,8 +1343,6 @@ sluwe
 smaad
 smaak
 smack
-small
-smart
 smash
 smeer
 smeet
@@ -1431,9 +1372,7 @@ soeps
 sonar
 sonde
 soort
-sores
 sorry
-sound
 spaak
 spade
 spalk
@@ -1445,7 +1384,6 @@ speet
 speld
 spelt
 spier
-spies
 spijt
 spike
 spint
@@ -1463,7 +1401,6 @@ spray
 sprei
 spuit
 spuug
-squaw
 staaf
 staak
 staal
@@ -1488,7 +1425,6 @@ steil
 stelt
 steno
 stent
-steps
 sterk
 stern
 steun
@@ -1509,10 +1445,8 @@ stonk
 stoof
 stoom
 stoot
-store
 storm
 stort
-story
 stout
 straf
 strak
@@ -1521,7 +1455,6 @@ strik
 strip
 strop
 strot
-stuff
 stuit
 stunt
 stuur
@@ -1569,7 +1502,6 @@ tesla
 tests
 thans
 thema
-these
 thuis
 tiara
 tijde
@@ -1599,20 +1531,15 @@ toros
 torso
 tosti
 totem
-touch
 traag
 traan
-track
-train
 trans
 trant
 trash
 trede
-trees
 trein
 trend
 trick
-trips
 troef
 troep
 troon
@@ -1620,7 +1547,6 @@ troop
 trots
 trouw
 truck
-trust
 tsaar
 tukje
 tumor
@@ -1630,7 +1556,6 @@ tweed
 tweet
 twijg
 twist
-tyfus
 typen
 uilen
 uiten
@@ -1639,7 +1564,6 @@ ukkie
 ultra
 unief
 uniek
-upper
 urban
 urine
 uzelf
@@ -1716,7 +1640,6 @@ wagon
 waken
 waker
 wanen
-wants
 wapen
 waren
 water
@@ -1737,7 +1660,6 @@ weten
 weven
 wezel
 wezen
-white
 wicca
 wicht
 wiens
@@ -1749,7 +1671,6 @@ winch
 winst
 witje
 witte
-wodka
 woede
 woest
 wogen
@@ -1762,7 +1683,6 @@ wrake
 wrang
 wreed
 wreef
-wrong
 zacht
 zadel
 zaden
@@ -1799,7 +1719,6 @@ zolen
 zomer
 zomin
 zonde
-zones
 zonet
 zopas
 zoute
