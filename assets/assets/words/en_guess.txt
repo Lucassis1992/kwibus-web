@@ -859,7 +859,6 @@ bonne
 bonny
 bonus
 bonze
-boobs
 booby
 booed
 boogy
@@ -1296,7 +1295,6 @@ chime
 chimp
 china
 chine
-chink
 chino
 chins
 chips
@@ -1312,7 +1310,6 @@ chock
 choir
 choke
 choky
-cholo
 chomp
 chook
 chops
@@ -1525,7 +1522,6 @@ cooky
 cools
 cooly
 coomb
-coons
 coops
 coopt
 coots
@@ -1692,7 +1688,6 @@ culpa
 culti
 cults
 cumin
-cunts
 cupel
 cupid
 cuppa
@@ -1757,7 +1752,6 @@ dados
 daffs
 daffy
 dagga
-dagos
 dahls
 daily
 dairy
@@ -1779,7 +1773,6 @@ darer
 dares
 daric
 darks
-darky
 darns
 darts
 dashi
@@ -1925,7 +1918,6 @@ diked
 diker
 dikes
 dikey
-dildo
 dills
 dilly
 dimer
@@ -2201,9 +2193,6 @@ dwine
 dyads
 dyers
 dying
-dyked
-dykes
-dykey
 dynel
 dynes
 eager
@@ -2413,9 +2402,7 @@ fadge
 fados
 faena
 faery
-faggy
 fagin
-fagot
 fails
 faint
 fairs
@@ -2782,7 +2769,6 @@ fruit
 frump
 fryer
 fubsy
-fucks
 fucus
 fudge
 fuels
@@ -2974,7 +2960,6 @@ gimpy
 ginks
 ginny
 gipon
-gipsy
 girds
 girls
 girly
@@ -3083,8 +3068,6 @@ goody
 gooey
 goofs
 goofy
-gooks
-gooky
 goons
 goony
 goops
@@ -3234,7 +3217,6 @@ guyed
 guyot
 gybed
 gybes
-gypsy
 gyral
 gyred
 gyres
@@ -3470,7 +3452,6 @@ homed
 homer
 homes
 homey
-homos
 honan
 honda
 honed
@@ -3479,7 +3460,6 @@ hones
 honey
 hongs
 honks
-honky
 honor
 hooch
 hoods
@@ -3747,7 +3727,6 @@ jests
 jetes
 jeton
 jetty
-jewed
 jewel
 jibbs
 jibed
@@ -3930,7 +3909,6 @@ kiddo
 kiddy
 kiefs
 kiers
-kikes
 kilim
 kills
 kilns
@@ -4009,7 +3987,6 @@ kotow
 kraal
 kraft
 krait
-kraut
 kreep
 krill
 krona
@@ -4190,7 +4167,6 @@ levin
 lewis
 lexes
 lexis
-lezzy
 liana
 liane
 liang
@@ -5633,8 +5609,6 @@ pones
 pongs
 pooch
 poods
-poofs
-poofy
 poohs
 pools
 poons
@@ -5651,9 +5625,6 @@ pores
 porgy
 porks
 porky
-porno
-porns
-porny
 ports
 posed
 poser
@@ -5665,8 +5636,6 @@ potsy
 potto
 potty
 pouch
-pouff
-poufs
 poult
 pound
 pours
@@ -5810,7 +5779,6 @@ purse
 pursy
 puses
 pushy
-pussy
 puton
 putti
 putto
@@ -5935,9 +5903,6 @@ ranid
 ranis
 ranks
 rants
-raped
-raper
-rapes
 raphe
 rapid
 rared
@@ -6351,7 +6316,6 @@ salty
 salve
 salvo
 samba
-sambo
 samek
 samps
 sands
@@ -6624,7 +6588,6 @@ shirk
 shirr
 shirt
 shist
-shits
 shiva
 shive
 shivs
@@ -6847,7 +6810,6 @@ slurb
 slurp
 slurs
 slush
-sluts
 slyer
 slyly
 slype
@@ -7042,8 +7004,6 @@ sperm
 spews
 spica
 spice
-spick
-spics
 spicy
 spied
 spiel
@@ -7102,7 +7062,6 @@ sputa
 squab
 squad
 squat
-squaw
 squeg
 squib
 squid
@@ -7628,7 +7587,6 @@ tithe
 titis
 title
 titre
-titty
 tizzy
 toads
 toady
@@ -7865,7 +7823,6 @@ tuyer
 twaes
 twain
 twang
-twats
 tweak
 tweed
 tween
@@ -8339,7 +8296,6 @@ whomp
 whoof
 whoop
 whops
-whore
 whorl
 whort
 whose
