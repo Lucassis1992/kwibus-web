@@ -168,7 +168,6 @@ arrived
 arrives
 arriving
 arrow
-arse
 article
 artist
 artists
@@ -181,7 +180,6 @@ asking
 asks
 asleep
 assault
-asshole
 assholes
 assigned
 assistant
@@ -260,7 +258,6 @@ basically
 basis
 basket
 bass
-bastard
 bastards
 bath
 bathroom
@@ -349,8 +346,6 @@ birds
 birth
 birthday
 bishop
-bitch
-bitches
 bite
 bits
 bitter
@@ -376,7 +371,6 @@ blocks
 bloke
 blonde
 blood
-bloody
 blow
 blowing
 blown
@@ -396,7 +390,6 @@ bond
 bone
 bones
 bonnie
-boobs
 book
 booked
 books
@@ -717,7 +710,6 @@ coal
 coast
 coat
 cocaine
-cock
 code
 coffee
 coffin
@@ -846,7 +838,6 @@ cowboy
 cows
 crack
 crane
-crap
 crash
 crashed
 crashing
@@ -882,7 +873,6 @@ crushed
 crying
 crystal
 culture
-cunt
 cure
 curious
 current
@@ -902,7 +892,6 @@ daisy
 dale
 damage
 damaged
-damn
 damned
 dance
 dancer
@@ -923,7 +912,6 @@ daughter
 daughters
 dawn
 days
-dead
 deadly
 deaf
 deal
@@ -932,7 +920,6 @@ dealing
 deals
 dean
 dear
-death
 deaths
 debate
 debt
@@ -1003,7 +990,6 @@ dial
 diamond
 diamonds
 diary
-dick
 died
 dies
 diet
@@ -1101,9 +1087,7 @@ drove
 drown
 drowned
 drug
-drugs
 drum
-drunk
 duck
 dude
 duke
@@ -1454,10 +1438,6 @@ from
 front
 frozen
 fruit
-fuck
-fucked
-fucker
-fucking
 fuel
 full
 fully
@@ -1672,7 +1652,6 @@ hector
 heels
 height
 held
-hell
 hello
 helmet
 help
@@ -1916,9 +1895,6 @@ kicking
 kidding
 kidnapped
 kids
-kill
-killed
-killer
 killers
 killing
 kills
@@ -2293,7 +2269,6 @@ much
 muffled
 multiple
 mummy
-murder
 murdered
 murderer
 murders
@@ -2308,7 +2283,6 @@ mystery
 myth
 nail
 nails
-naked
 name
 named
 names
@@ -2325,7 +2299,6 @@ naturally
 nature
 naughty
 navy
-nazi
 near
 nearby
 nearly
@@ -2517,7 +2490,6 @@ peace
 peaceful
 pearl
 penalty
-penis
 penny
 people
 pepper
@@ -2561,8 +2533,6 @@ pills
 pilot
 pink
 pipe
-piss
-pissed
 pitch
 pity
 pizza
@@ -2621,7 +2591,6 @@ pope
 pops
 popular
 pork
-porn
 port
 position
 positions
@@ -2777,8 +2746,6 @@ randy
 range
 rangers
 rank
-rape
-raped
 rare
 rate
 rather
@@ -3081,8 +3048,6 @@ settled
 seven
 several
 severe
-sexual
-sexy
 shadow
 shadows
 shake
@@ -3112,7 +3077,6 @@ shining
 ship
 ships
 shirt
-shit
 shitty
 shock
 shocked
@@ -3201,7 +3165,6 @@ slip
 slipped
 slow
 slowly
-slut
 small
 smaller
 smart
@@ -3427,7 +3390,6 @@ suffering
 sugar
 suggest
 suggested
-suicide
 suit
 suitcase
 suite
@@ -3620,7 +3582,6 @@ tired
 tires
 tissue
 title
-tits
 toast
 toby
 today
@@ -3798,7 +3759,6 @@ visitor
 visitors
 visual
 vital
-vodka
 voice
 voices
 volunteer
@@ -3888,7 +3848,6 @@ which
 while
 whip
 whirring
-whiskey
 whispers
 whistle
 whistles
@@ -3898,7 +3857,6 @@ whoa
 whoever
 whole
 whom
-whore
 whose
 wicked
 wide
