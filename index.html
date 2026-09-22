@@ -108,12 +108,19 @@
     // 2.25 times as many as at 2x, for a difference you cannot see at arm's
     // length; on a phone's GPU that is the gap between smooth and stutter.
     // So the app renders at most at 2x.
+    // Always the real value, capped: some browsers only settle on their
+    // ratio after the page has started (and zooming changes it).
     (function () {
-      if ((window.devicePixelRatio || 1) > 2) {
-        try {
-          Object.defineProperty(window, 'devicePixelRatio', { get: function () { return 2; }, configurable: true });
-        } catch (e) {}
-      }
+      var d = Object.getOwnPropertyDescriptor(window, 'devicePixelRatio') ||
+        Object.getOwnPropertyDescriptor(Window.prototype, 'devicePixelRatio');
+      if (!d || !d.get) return;
+      var real = d.get;
+      try {
+        Object.defineProperty(window, 'devicePixelRatio', {
+          get: function () { return Math.min(2, real.call(window) || 1); },
+          configurable: true,
+        });
+      } catch (e) {}
     })();
   </script>
   <script src="flutter_bootstrap.js?v=220504cad5a1" async></script>
