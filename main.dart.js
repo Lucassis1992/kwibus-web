@@ -13817,7 +13817,7 @@ _.y=1
 _.z=0
 _.Q=!1
 _.as=null
-_.at=0
+_.at=-1e12
 _.ax=!1
 _.ay=0},
 b3l:function b3l(a,b,c,d,e,f){var _=this
@@ -116842,7 +116842,7 @@ this.bx()
 this.dB()}}
 A.aSy.prototype={
 gu4(){var s=this.c,r=this.b
-return s==null?r:r+B.d.G(this.a.$0()-s,0,0)}}
+return s==null?r:r+Math.max(0,this.a.$0()-s)}}
 A.a9x.prototype={}
 A.a9v.prototype={}
 A.aSG.prototype={
