@@ -24,6 +24,14 @@ function clean(ev) {
     if (typeof ev[k] === 'boolean') out[k] = ev[k];
   }
   if (ev.won === true || ev.won === false || ev.won === null) out.won = ev.won;
+  if (Array.isArray(ev.names)) {
+    const names = ev.names
+      .filter((n) => typeof n === 'string')
+      .map((n) => n.replace(/[\p{C}]/gu, '').trim().slice(0, 24))
+      .filter(Boolean)
+      .slice(0, 8);
+    if (names.length) out.names = names;
+  }
   return out;
 }
 

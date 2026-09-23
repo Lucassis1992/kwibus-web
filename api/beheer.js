@@ -110,7 +110,7 @@ function fold(batches) {
       });
     } else if (e.t === 'start') {
       s.plays.push({
-        game: e.game, mode: e.mode, n: e.n, daily: !!e.daily, resumed: !!e.resumed,
+        game: e.game, mode: e.mode, n: e.n, names: e.names || [], daily: !!e.daily, resumed: !!e.resumed,
         start: e.at, last: e.at, secs: null, finished: false, won: null,
       });
     } else if (e.t === 'end' || e.t === 'finish' || e.t === 'ping') {

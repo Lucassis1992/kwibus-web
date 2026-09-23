@@ -131,6 +131,12 @@
       <div id="games"></div>
     </div>
 
+    <div class="card" style="margin-bottom:16px">
+      <h2>Spelers</h2>
+      <p class="sub small">De namen die mensen zelf invulden bij een potje. "Jij", "Speler 2" en computerspelers tellen niet mee.</p>
+      <div id="names"></div>
+    </div>
+
     <div class="card">
       <h2>Laatste bezoeken</h2>
       <p class="sub small">Tijden in jouw tijdzone. Een bezoek is één keer openen van de app of website.</p>
@@ -226,11 +232,13 @@
       tile('Potjes geopend', fmtN(plays.length), plays.length ? Math.round(100 * plays.filter((p) => p.finished).length / plays.length) + '% uitgespeeld' : ''),
       tile('Speeltijd', fmtDur(playSecs), plays.length ? 'gem. ' + fmtDur(playSecs / plays.length) + ' per potje' : ''),
       tile('Terugkerend', fmtN([...visitors].filter((v) => S.filter((s) => s.v === v).length > 1).length), 'bezoekers met meer dan één bezoek'),
+      tile('Namen', fmtN(new Set(plays.flatMap((p) => p.names || []).map((n) => n.toLowerCase())).size), 'ingevulde spelersnamen'),
     ].join('');
 
     renderChart(S);
     renderDevices(S);
     renderGames(plays);
+    renderNames(S);
     renderRecent(S);
   }
 
@@ -324,6 +332,27 @@
       }).join('') + '</tbody></table>';
   }
 
+  function renderNames(S) {
+    const m = new Map();
+    for (const s of S) {
+      for (const p of s.plays) {
+        for (const raw of p.names || []) {
+          const k = raw.toLowerCase();
+          let r = m.get(k);
+          if (!r) { r = { name: raw, plays: 0, secs: 0, last: 0, games: new Map(), devices: new Set() }; m.set(k, r); }
+          r.plays++; r.secs += p.secs || 0; r.last = Math.max(r.last, p.start); r.devices.add(s.v);
+          r.games.set(p.game, (r.games.get(p.game) || 0) + 1);
+        }
+      }
+    }
+    if (!m.size) { $('#names').innerHTML = '<p class="empty">Nog geen namen ingevuld.</p>'; return; }
+    const rows = [...m.values()].sort((a, b) => b.plays - a.plays || b.last - a.last);
+    $('#names').innerHTML = '<table><thead><tr><th>Naam</th><th class="num">Potjes</th><th class="num hide-sm">Speeltijd</th><th class="num hide-sm">Toestellen</th><th>Laatst</th><th class="hide-sm">Spellen</th></tr></thead><tbody>' +
+      rows.map((r) => '<tr><td><b>' + esc(r.name) + '</b></td><td class="num">' + r.plays + '</td><td class="num hide-sm">' + esc(fmtDur(r.secs)) + '</td><td class="num hide-sm">' + r.devices.size + '</td><td style="white-space:nowrap">' + esc(timeLabel(r.last)) + '</td><td class="hide-sm"><div class="chips">' +
+        [...r.games.entries()].sort((a, b) => b[1] - a[1]).map(([g, n]) => '<span class="chip quiet">' + esc(gameName(g)) + ' ' + n + '</span>').join('') + '</div></td></tr>').join('') +
+      '</tbody></table>';
+  }
+
   function renderRecent(S) {
     if (!S.length) { $('#recent').innerHTML = '<p class="empty">Nog geen bezoeken.</p>'; return; }
     const rows = [...S].sort((a, b) => b.first - a.first).slice(0, 40);
@@ -331,7 +360,7 @@
       rows.map((s) => {
         const d = device(s);
         const who = (s.new ? 'nieuw · ' : '') + [d.kind, d.platform, s.lang].filter(Boolean).join(' · ') + (s.w ? ' · ' + s.w + '×' + s.h : '');
-        const chips = s.plays.length ? s.plays.map((p) => '<span class="chip' + (p.finished ? ' done' : '') + '" title="' + esc(MODES[p.mode] || p.mode || '') + '">' + esc(gameName(p.game)) + ' ' + esc(fmtDur(p.secs)) + (p.won === true ? ' ✓' : '') + '</span>').join('') : '<span class="muted small">alleen rondgekeken</span>';
+        const chips = s.plays.length ? s.plays.map((p) => '<span class="chip' + (p.finished ? ' done' : '') + '" title="' + esc(MODES[p.mode] || p.mode || '') + '">' + esc(gameName(p.game)) + ' ' + esc(fmtDur(p.secs)) + (p.won === true ? ' ✓' : '') + ((p.names || []).length ? ' · ' + esc(p.names.join(', ')) : '') + '</span>').join('') : '<span class="muted small">alleen rondgekeken</span>';
         return '<tr><td style="white-space:nowrap">' + esc(timeLabel(s.first)) + '</td><td class="hide-sm small muted">' + esc(who) + '</td><td class="num">' + esc(fmtDur(sessionSecs(s))) + '</td><td><div class="chips">' + chips + '</div></td></tr>';
       }).join('') + '</tbody></table>' +
       '<p class="small muted" style="margin:10px 0 0">Groen = uitgespeeld, ✓ = gewonnen. Ieder toestel krijgt een willekeurig nummer; wie het is, weten we niet.</p>';
