@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Privacy – Kwibus</title>
-  <meta name="description" content="Wat Kwibus wel en niet met je gegevens doet: geen account, geen reclame, en een eigen gebruiksteller.">
+  <meta name="description" content="Wat Kwibus wel en niet met je gegevens doet: geen account, geen reclame, alleen een anonieme teller.">
   <link rel="canonical" href="https://kwibus.online/privacy">
   <link rel="icon" type="image/png" href="/favicon.png">
   <meta name="theme-color" content="#FFF7EA">
@@ -46,7 +46,7 @@
   </header>
 
   <h1>Privacy</h1>
-  <p class="lead">Kwibus heeft geen account en geen reclame. We willen niets van je weten; je speelt gewoon. Het enige dat we bijhouden is onze eigen gebruiksteller: welke spellen gespeeld worden, hoe lang, en de namen die je zelf invult.</p>
+  <p class="lead">Kwibus heeft geen account en geen reclame. We willen niets van je weten; je speelt gewoon. Het enige dat we bijhouden is een anonieme teller: welke spellen gespeeld worden en hoe lang.</p>
 
   <h2>Wat op je eigen toestel blijft</h2>
   <p>Je instellingen, je opgeslagen potjes en je statistieken staan alleen op je eigen toestel (in de app, of op de website in de opslag van je browser). Ze gaan nergens heen. Wil je ze kwijt, verwijder dan de app of wis de websitegegevens van kwibus.online in je browser.</p>
@@ -60,6 +60,9 @@
     <li>Om ook zonder verbinding te werken bewaart je browser een kopie van de app op je toestel. Die kopie blijft op je toestel.</li>
   </ul>
 
+  <h2>Het scorebord van de dagpuzzels</h2>
+  <p>Bij de dagpuzzels (dagsudoku, dagwoord en de andere puzzels van de dag) staat een openbaar scorebord: iedereen maakt dezelfde puzzel, dus de tijden zijn te vergelijken. Er gaat pas iets naar dat bord als je er <strong>zelf een naam bij zet</strong>. Dan sturen we naar onze eigen server: die naam, het spel, de dag, je tijd of aantal beurten of fouten, en hetzelfde willekeurige toestelnummer als bij de gebruiksteller (zo staat elk toestel maar één keer op een bord). Iedereen die de app gebruikt kan die naam en tijd zien; kies dus een bijnaam. Geen naam ingevuld? Dan blijft je tijd op je eigen toestel en zie je alleen het bord van anderen. De naam wissen kan bij Instellingen; vanaf dan gaat er niets meer mee.</p>
+
   <h2>Online spelen</h2>
   <p>Speel je online met een kamercode, dan loopt dat zonder eigen server via <strong>openbare berichtenservers</strong> (MQTT, van EMQX en HiveMQ). Wat daarover gaat:</p>
   <ul>
@@ -72,11 +75,12 @@
   <p>Kwibus vraagt niemand om persoonlijke gegevens, ook kinderen niet. Er is geen chat en er zijn geen advertenties of aankopen in de website.</p>
 
   <h2>Wijzigingen</h2>
-  <p>Verandert er iets aan hoe Kwibus met gegevens omgaat, dan staat dat op deze pagina. Laatst bijgewerkt: 24 september 2026 (gebruiksteller, inclusief ingevulde namen).</p>
+  <p>Verandert er iets aan hoe Kwibus met gegevens omgaat, dan staat dat op deze pagina. Laatst bijgewerkt: 22 september 2026 (anonieme teller toegevoegd).</p>
 
   <section class="lang" lang="en">
     <h2>In English</h2>
     <p>Kwibus has no accounts and no ads. Your settings, saved games and statistics stay on your own device (in the app, or in your browser's storage on the website). We do keep our own usage count (it is not fully anonymous, because it includes the names you type): a random number for your device, which game you open, for how long, in which mode, the names you type for the seats at a game (use a nickname if you prefer), your language, device type and screen size; no e-mail address, no IP address and nothing about what happens in a game. The website uses no cookies and no third-party analytics; it is hosted by Vercel, which, like any web server, sees your IP address when it sends you a page. The app and its fonts come from this site itself; only characters our fonts lack (such as an emoji in a player name) make the website fetch an extra font from Google Fonts. To work offline, your browser keeps a copy of the app on your device.</p>
+    <p>The daily puzzles have a <strong>public leaderboard</strong>. Nothing goes there until you put a name on it yourself; then we send that name, the game, the day, your time (or tries, or mistakes) and the same random device number the usage count uses, so each device is on a board once. Everyone using the app can see that name and time, so pick a nickname. Without a name your time stays on your device and you only see the others. Clear the name in Settings and nothing is sent any more.</p>
     <p>Online play with a room code runs over <strong>public MQTT message servers</strong> (EMQX and HiveMQ): the room code, the names you enter and the game state travel through them, and the latest state stays there until it is overwritten. Anyone who knows the room code could read along, so use a nickname. Offline play and playing on one device use no server at all.</p>
   </section>
 
