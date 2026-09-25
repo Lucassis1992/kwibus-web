@@ -1,8 +1,8 @@
 // Receives the anonymous usage events from the app (lib/core/usage.dart) and
-// stores each batch as one small file in the private Blob store:
-//   ev/<yyyy-mm-dd>/<session>-<time>.json
-// Nothing about the sender is added: no IP address, no user agent.
-import { put } from '@vercel/blob';
+// stores each event as one row in the events table (see _db.js), under the
+// day it was received. Nothing about the sender is added: no IP address, no
+// user agent.
+import { db, ensure } from './_db.js';
 
 const TYPES = new Set(['open', 'start', 'end', 'finish', 'ping']);
 const ID = /^[a-z0-9]{8,32}$/;
@@ -48,16 +48,30 @@ export default async function handler(req, res) {
   if (ev.length === 0) return res.status(204).end();
   const now = Date.now();
   const day = new Date(now).toISOString().slice(0, 10);
-  const name = `ev/${day}/${body.s}-${now}-${Math.random().toString(36).slice(2, 8)}.json`;
   try {
-    await put(name, JSON.stringify({ v: body.v, s: body.s, rec: now, ev }), {
-      access: 'private',
-      addRandomSuffix: false,
-      contentType: 'application/json',
-    });
+    await ensure();
+    await db().batch(
+      ev.map((e) => ({
+        sql: `INSERT INTO events (day, rec, v, s, t, at, game, mode, platform, lang, n, w, h, tz, secs, new, daily, resumed, won, names)
+              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        args: [
+          day, now, body.v, body.s, e.t, e.at,
+          e.game ?? null, e.mode ?? null, e.platform ?? null, e.lang ?? null,
+          e.n ?? null, e.w ?? null, e.h ?? null, e.tz ?? null, e.secs ?? null,
+          flag(e.new), flag(e.daily), flag(e.resumed), flag(e.won),
+          e.names ? JSON.stringify(e.names) : null,
+        ],
+      })),
+      'write',
+    );
   } catch (e) {
-    console.error('track: put failed', e?.message || e);
+    console.error('track: insert failed', e?.message || e);
     return res.status(500).end();
   }
   res.status(204).end();
+}
+
+/// true/false as 1/0; anything else (unknown) as null.
+function flag(v) {
+  return v === true ? 1 : v === false ? 0 : null;
 }

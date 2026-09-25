@@ -5,18 +5,12 @@
 //   GET  /api/daily?game=&day=&v=[&a=&b=]          read the board; with a/b,
 //                                                  "me" is where I would land
 //
-// Storage: one small private blob per board, board/<game>/<day>.json, read
-// on every request (a simple operation) and written only when a result is
-// added (an advanced operation: the Hobby plan has 2,000 of those a month,
-// so nothing is written on a read). Two people finishing in the same
-// second could overwrite each other; after a write the board is read back
-// once and my entry put again if it went missing. Nothing about the sender
-// is stored beyond the random install id, the name they typed and the
-// score. A device gets one entry per game per day; the first one stays.
-import { get, put } from '@vercel/blob';
+// Storage: one row per entry in the daily_scores table (see _db.js), with
+// the primary key on game, day and device: a device gets one entry per
+// board and the first one stays. Nothing about the sender is stored beyond
+// the random install id, the name they typed and the score.
+import { db, ensure } from './_db.js';
 
-// Lowest and highest score that counts per game: milliseconds for the timed
-// puzzles, tries for the word, mistakes for the foursomes. Lower is better.
 const GAMES = {
   sudoku: [20000, 1e7],
   kroontjes: [2000, 1e7],
@@ -27,7 +21,6 @@ const GAMES = {
 };
 const ID = /^[a-z0-9]{8,32}$/;
 const TOP = 10;
-const MAX_ENTRIES = 1000;
 // Names that have no place on a public board. Matched on letters only, so
 // spacing and accents do not get around it.
 const BAD = ['kanker', 'tering', 'tyfus', 'hoer', 'neuk', 'fuck', 'shit', 'nazi', 'hitler', 'nigg', 'cunt', 'slet', 'bitch', 'kut', 'pussy', 'penis'];
@@ -51,66 +44,65 @@ export default async function handler(req, res) {
   if (!game || !day || !v) return res.status(400).json({ error: 'request' });
   const score = cleanScore(game, q.a, q.b);
 
-  let entries;
-  try {
-    entries = await loadEntries(game, day);
-  } catch (e) {
-    console.error('daily: load failed', e?.message || e);
-    return res.status(500).end();
-  }
-  let mine = entries.find((e) => e.v === v) || null;
-
+  let name = null;
   if (req.method === 'POST') {
     if (!score) return res.status(400).json({ error: 'score' });
-    const name = cleanName(q.name);
+    name = cleanName(q.name);
     if (name === 'refused') return res.status(422).json({ error: 'name' });
     if (!name) return res.status(400).json({ error: 'name' });
-    if (!mine) {
-      mine = { v, name, a: score.a, b: score.b, at: Date.now() };
-      entries.push(mine);
-      sortEntries(entries);
-      try {
-        await saveEntries(game, day, entries);
-        // Read back: a write that crossed another one is put again, merged.
-        const check = await loadEntries(game, day);
-        if (!check.some((e) => e.v === v)) {
-          entries = [...check, mine];
-          sortEntries(entries);
-          await saveEntries(game, day, entries);
-        }
-      } catch (e) {
-        console.error('daily: put failed', e?.message || e);
-        return res.status(500).end();
-      }
-    }
   }
-
-  return res.status(200).json(board(game, day, entries, v, mine, score));
+  try {
+    await ensure();
+    if (name) {
+      await db().execute({
+        sql: 'INSERT OR IGNORE INTO daily_scores (game, day, v, name, a, b, at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        args: [game, day, v, name, score.a, score.b, Date.now()],
+      });
+    }
+    return res.status(200).json(await board(game, day, v, score));
+  } catch (e) {
+    console.error('daily: db failed', e?.message || e);
+    return res.status(500).end();
+  }
 }
 
 /// The board as the app shows it: the top rows, and where I stand. Without
 /// an entry of my own but with a score, "me" is the row I would get.
-function board(game, day, entries, v, mine, score) {
-  const rows = entries.map((e, i) => ({ rank: i + 1, name: e.name, a: e.a, b: e.b, me: e.v === v }));
+async function board(game, day, v, score) {
+  const c = db();
+  const where = 'game = ? AND day = ?';
+  const [top, count, mine] = await c.batch(
+    [
+      { sql: `SELECT v, name, a, b FROM daily_scores WHERE ${where} ORDER BY a, COALESCE(b, 0), at LIMIT ${TOP}`, args: [game, day] },
+      { sql: `SELECT COUNT(*) AS n FROM daily_scores WHERE ${where}`, args: [game, day] },
+      { sql: `SELECT name, a, b, at FROM daily_scores WHERE ${where} AND v = ?`, args: [game, day, v] },
+    ],
+    'read',
+  );
+  const n = Number(count.rows[0]?.n ?? 0);
+  const rows = top.rows.map((r, i) => ({ rank: i + 1, name: r.name, a: Number(r.a), b: r.b == null ? null : Number(r.b), me: r.v === v }));
   let me = null;
-  if (mine) {
-    const i = entries.indexOf(mine);
-    me = { rank: i + 1, name: mine.name, a: mine.a, b: mine.b, virtual: false };
+  const own = mine.rows[0];
+  if (own) {
+    const rank = await rankOf(game, day, Number(own.a), own.b == null ? 0 : Number(own.b), Number(own.at));
+    me = { rank, name: own.name, a: Number(own.a), b: own.b == null ? null : Number(own.b), virtual: false };
   } else if (score) {
-    const probe = { a: score.a, b: score.b, at: Infinity };
-    let rank = 1;
-    for (const e of entries) if (compare(e, probe) < 0) rank++;
+    // Where the score would land, behind everyone it ties with.
+    const rank = await rankOf(game, day, score.a, score.b ?? 0, null);
     me = { rank, name: null, a: score.a, b: score.b, virtual: true };
   }
-  return { game, day, n: entries.length, top: rows.slice(0, TOP), me };
+  return { game, day, n, top: rows, me };
 }
 
-function compare(x, y) {
-  return x.a - y.a || (x.b || 0) - (y.b || 0) || x.at - y.at;
-}
-
-function sortEntries(entries) {
-  entries.sort(compare);
+/// One plus the number of entries that beat (a, b, at): lower a, then lower
+/// b, then earlier. With [at] null every tie counts as ahead.
+async function rankOf(game, day, a, b, at) {
+  const r = await db().execute({
+    sql: `SELECT COUNT(*) AS c FROM daily_scores WHERE game = ? AND day = ?
+          AND (a < ? OR (a = ? AND COALESCE(b, 0) < ?) OR (a = ? AND COALESCE(b, 0) = ? AND ${at == null ? '1' : 'at < ?'}))`,
+    args: at == null ? [game, day, a, a, b, a, b] : [game, day, a, a, b, a, b, at],
+  });
+  return Number(r.rows[0]?.c ?? 0) + 1;
 }
 
 function cleanScore(game, a, b) {
@@ -149,37 +141,3 @@ function validDay(raw) {
   return null;
 }
 
-async function loadEntries(game, day) {
-  const stored = await readJson(boardPath(game, day));
-  const entries = [];
-  if (stored && Array.isArray(stored.entries)) {
-    for (const e of stored.entries.slice(0, MAX_ENTRIES)) {
-      if (e && typeof e.v === 'string' && typeof e.name === 'string' && Number.isInteger(e.a)) entries.push(e);
-    }
-  }
-  sortEntries(entries);
-  return entries;
-}
-
-function boardPath(game, day) {
-  return `board/${game}/${day}.json`;
-}
-
-function saveEntries(game, day, entries) {
-  return put(boardPath(game, day), JSON.stringify({ entries: entries.slice(0, MAX_ENTRIES) }), {
-    access: 'private',
-    addRandomSuffix: false,
-    allowOverwrite: true,
-    contentType: 'application/json',
-  });
-}
-
-async function readJson(pathname) {
-  try {
-    const r = await get(pathname, { access: 'private', useCache: false });
-    if (!r || !r.stream) return null;
-    return JSON.parse(await new Response(r.stream).text());
-  } catch {
-    return null;
-  }
-}

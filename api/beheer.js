@@ -1,7 +1,10 @@
-// The maker's overview (kwibus.online/beheer): turns the stored event batches
-// into one session list per day. Days before today are compacted once into
-// day/<yyyy-mm-dd>.json so the raw files are read only once.
-import { list, get, put } from '@vercel/blob';
+// The maker's overview (kwibus.online/beheer): turns the stored events into
+// one session list per day. Events live in the events table (see _db.js);
+// days from before the move to the database (2026-09-25) are read from the
+// compacted day/<yyyy-mm-dd>.json files in the old Blob store as long as
+// that store answers.
+import { get } from '@vercel/blob';
+import { db, ensure } from './_db.js';
 import { names } from './_names.js';
 
 const MAX_DAYS = 365;
@@ -48,53 +51,43 @@ async function readJson(pathname) {
   }
 }
 
-async function listAll(prefix) {
-  const out = [];
-  let cursor;
-  do {
-    const page = await list({ prefix, cursor, limit: 1000 });
-    out.push(...page.blobs);
-    cursor = page.hasMore ? page.cursor : undefined;
-  } while (cursor);
-  return out;
+async function sessionsFor(day, past) {
+  let rows = [];
+  try {
+    await ensure();
+    const r = await db().execute({ sql: 'SELECT * FROM events WHERE day = ? ORDER BY at', args: [day] });
+    rows = r.rows;
+  } catch (e) {
+    console.error('beheer: db failed', e?.message || e);
+  }
+  if (rows.length === 0 && past) {
+    const done = await readJson(`day/${day}.json`).catch(() => null);
+    if (done && Array.isArray(done.sessions)) return done.sessions;
+    return [];
+  }
+  return fold(
+    rows.map((r) => ({
+      v: r.v, s: r.s, t: r.t, at: Number(r.at),
+      game: r.game ?? undefined, mode: r.mode ?? undefined, platform: r.platform ?? undefined, lang: r.lang ?? undefined,
+      n: num(r.n), w: num(r.w), h: num(r.h), tz: num(r.tz), secs: num(r.secs),
+      new: bool(r.new), daily: bool(r.daily), resumed: bool(r.resumed), won: bool(r.won),
+      names: r.names ? JSON.parse(r.names) : undefined,
+    })),
+  );
 }
 
-async function sessionsFor(day, compactable) {
-  const compactPath = `day/${day}.json`;
-  if (compactable) {
-    const done = await readJson(compactPath).catch(() => null);
-    if (done && Array.isArray(done.sessions)) return done.sessions;
-  }
-  const blobs = await listAll(`ev/${day}/`);
-  if (blobs.length === 0) return [];
-  const batches = [];
-  // Read in groups so a busy day does not open hundreds of connections at once.
-  for (let i = 0; i < blobs.length; i += 25) {
-    const chunk = blobs.slice(i, i + 25);
-    const got = await Promise.all(chunk.map((b) => readJson(b.pathname).catch(() => null)));
-    batches.push(...got.filter(Boolean));
-  }
-  const sessions = fold(batches);
-  if (compactable) {
-    await put(compactPath, JSON.stringify({ day, sessions }), {
-      access: 'private',
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      contentType: 'application/json',
-    }).catch((e) => console.error('beheer: compact failed', e?.message || e));
-  }
-  return sessions;
+function num(v) {
+  return v == null ? undefined : Number(v);
+}
+
+function bool(v) {
+  return v == null ? null : Number(v) === 1;
 }
 
 // One record per visit: who (anonymous visitor id), what device, and every
 // game screen that was opened, with how long it stayed open.
-function fold(batches) {
+function fold(events) {
   const bySession = new Map();
-  const events = [];
-  for (const b of batches) {
-    if (!b || !Array.isArray(b.ev)) continue;
-    for (const e of b.ev) events.push({ ...e, v: b.v, s: b.s });
-  }
   events.sort((a, b) => a.at - b.at);
   for (const e of events) {
     let s = bySession.get(e.s);
