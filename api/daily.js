@@ -5,13 +5,15 @@
 //   GET  /api/daily?game=&day=&v=[&a=&b=]          read the board; with a/b,
 //                                                  "me" is where I would land
 //
-// Storage: one small private blob per entry, board/<game>/<day>/<v>.json,
-// so two people finishing at once never overwrite each other; the board is
-// put together on read and kept for a short while in boardcache/. Nothing
-// about the sender is stored beyond the random install id, the name they
-// typed and the score. A device gets one entry per game per day; the first
-// one stays.
-import { list, get, put } from '@vercel/blob';
+// Storage: one small private blob per board, board/<game>/<day>.json, read
+// on every request (a simple operation) and written only when a result is
+// added (an advanced operation: the Hobby plan has 2,000 of those a month,
+// so nothing is written on a read). Two people finishing in the same
+// second could overwrite each other; after a write the board is read back
+// once and my entry put again if it went missing. Nothing about the sender
+// is stored beyond the random install id, the name they typed and the
+// score. A device gets one entry per game per day; the first one stays.
+import { get, put } from '@vercel/blob';
 
 // Lowest and highest score that counts per game: milliseconds for the timed
 // puzzles, tries for the word, mistakes for the foursomes. Lower is better.
@@ -26,7 +28,6 @@ const GAMES = {
 const ID = /^[a-z0-9]{8,32}$/;
 const TOP = 10;
 const MAX_ENTRIES = 1000;
-const CACHE_MS = 20000;
 // Names that have no place on a public board. Matched on letters only, so
 // spacing and accents do not get around it.
 const BAD = ['kanker', 'tering', 'tyfus', 'hoer', 'neuk', 'fuck', 'shit', 'nazi', 'hitler', 'nigg', 'cunt', 'slet', 'bitch', 'kut', 'pussy', 'penis'];
@@ -66,20 +67,21 @@ export default async function handler(req, res) {
     if (!name) return res.status(400).json({ error: 'name' });
     if (!mine) {
       mine = { v, name, a: score.a, b: score.b, at: Date.now() };
+      entries.push(mine);
+      sortEntries(entries);
       try {
-        await put(`board/${game}/${day}/${v}.json`, JSON.stringify(mine), {
-          access: 'private',
-          addRandomSuffix: false,
-          allowOverwrite: true,
-          contentType: 'application/json',
-        });
+        await saveEntries(game, day, entries);
+        // Read back: a write that crossed another one is put again, merged.
+        const check = await loadEntries(game, day);
+        if (!check.some((e) => e.v === v)) {
+          entries = [...check, mine];
+          sortEntries(entries);
+          await saveEntries(game, day, entries);
+        }
       } catch (e) {
         console.error('daily: put failed', e?.message || e);
         return res.status(500).end();
       }
-      entries.push(mine);
-      sortEntries(entries);
-      await saveCache(game, day, entries);
     }
   }
 
@@ -148,38 +150,28 @@ function validDay(raw) {
 }
 
 async function loadEntries(game, day) {
-  const cached = await readJson(cachePath(game, day));
-  if (cached && Array.isArray(cached.entries) && Date.now() - cached.at < CACHE_MS) return cached.entries;
-  const page = await list({ prefix: `board/${game}/${day}/`, limit: MAX_ENTRIES });
+  const stored = await readJson(boardPath(game, day));
   const entries = [];
-  const blobs = page.blobs.filter((b) => b.pathname.endsWith('.json'));
-  for (let i = 0; i < blobs.length; i += 50) {
-    const part = await Promise.all(blobs.slice(i, i + 50).map((b) => readJson(b.pathname)));
-    for (const e of part) {
+  if (stored && Array.isArray(stored.entries)) {
+    for (const e of stored.entries.slice(0, MAX_ENTRIES)) {
       if (e && typeof e.v === 'string' && typeof e.name === 'string' && Number.isInteger(e.a)) entries.push(e);
     }
   }
   sortEntries(entries);
-  await saveCache(game, day, entries);
   return entries;
 }
 
-function cachePath(game, day) {
-  return `boardcache/${game}/${day}.json`;
+function boardPath(game, day) {
+  return `board/${game}/${day}.json`;
 }
 
-async function saveCache(game, day, entries) {
-  try {
-    await put(cachePath(game, day), JSON.stringify({ at: Date.now(), entries }), {
-      access: 'private',
-      addRandomSuffix: false,
-      allowOverwrite: true,
-      contentType: 'application/json',
-    });
-  } catch (e) {
-    // The board is still served; the next read just builds it again.
-    console.error('daily: cache failed', e?.message || e);
-  }
+function saveEntries(game, day, entries) {
+  return put(boardPath(game, day), JSON.stringify({ entries: entries.slice(0, MAX_ENTRIES) }), {
+    access: 'private',
+    addRandomSuffix: false,
+    allowOverwrite: true,
+    contentType: 'application/json',
+  });
 }
 
 async function readJson(pathname) {
