@@ -185,7 +185,7 @@ class CompiledApp {
       HG: x0 => x0.iterator,
       HH: (x0,x1) => { x0.className = x1 },
       HI: (x0,x1) => x0.getRandomValues(x1),
-      HJ: (a, l) => a.length = l,
+      HJ: (a, i) => a.splice(i, 1)[0],
       HK: (x0,x1) => { x0.onreading = x1 },
       I: Function.prototype.call.bind(String.prototype.indexOf),
       IB: x0 => new Float64Array(x0),
@@ -196,7 +196,7 @@ class CompiledApp {
       IG: () => globalThis.Symbol,
       IH: (x0,x1) => { x0.tabIndex = x1 },
       II: () => globalThis.crypto,
-      IJ: (a, s, e) => a.splice(s, e),
+      IJ: (a, l) => a.length = l,
       IK: x0 => x0.z,
       J: (s, p, i) => s.lastIndexOf(p, i),
       JB: (jsArray, jsArrayOffset, wasmArray, wasmArrayOffset, length) => {
@@ -212,7 +212,7 @@ class CompiledApp {
       JG: (x0,x1) => new Intl.Segmenter(x0,x1),
       JH: (x0,x1) => { x0.name = x1 },
       JI: l => new DataView(new ArrayBuffer(l)),
-      JJ: (a, i) => a.splice(i, 1)[0],
+      JJ: (a, s, e) => a.splice(s, e),
       JK: x0 => x0.y,
       K: (exn) => {
         if (exn instanceof Error) {
