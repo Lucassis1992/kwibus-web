@@ -140045,14 +140045,15 @@ return new A.aro(r,q)},
 bqh(a){var s,r,q,p=A.b([],t.t)
 for(s=this.b.length,r=this.r,q=0;q<s;++q)if(r.h(0,q)===a)p.push(q)
 return p},
-NJ(a,b){var s,r=this
-if(r.a!==B.hj||r.grb()||r.gA7())return r
-if(a>=r.b.length)return r
-if(b!==0&&b!==1)return r
-s=t.S
-s=A.ef(r.r,s,s)
-s.u(0,a,b)
-return r.bbC(s)},
+NJ(a,b){var s=this,r=!0
+if(s.a===B.hj)if(!s.grb())r=s.gA7()&&s.b.length!==1
+if(r)return s
+if(a>=s.b.length)return s
+if(b!==0&&b!==1)return s
+r=t.S
+r=A.ef(s.r,r,r)
+r.u(0,a,b)
+return s.bbC(r)},
 bnR(a){var s,r=this
 if(r.a!==B.jP||r.grb())return r
 if(a<0||a>=r.b.length)return r
@@ -140203,12 +140204,13 @@ bbI(a){return this.ML(a,null)},
 bbO(){var s=this.w
 s===$&&A.a()
 return this.ML(s.boe(),new A.bIi())},
-bbK(a){var s,r,q=this.w
-q===$&&A.a()
-s=q.gFP()
+bbK(a){var s,r,q=this,p=q.w
+p===$&&A.a()
+s=p.gFP()
+if(s==null)s=q.w.b.length===1?0:null
 if(s==null)return
-r=this.w.NJ(s,a)
-this.ML(r,new A.bIh(r))},
+r=q.w.NJ(s,a)
+q.ML(r,new A.bIh(r))},
 zF(){var s=0,r=A.M(t.H),q,p=this,o,n,m,l,k,j,i,h,g,f,e,d
 var $async$zF=A.N(function(a,b){if(a===1)return A.J(b,r)
 for(;;)switch(s){case 0:if(p.x){s=1
@@ -140327,7 +140329,7 @@ bbN(a){var s,r,q,p,o,n=this,m="Geef het toestel aan ",l="Hand the device to ",k=
 j===$&&A.a()
 if(j.grb()||n.x)return k?"Een nieuwe ronde schudt de set opnieuw.":"A new round reshuffles the set."
 j=n.w
-switch(j.a.a){case 0:if(j.b.length===1){if(j.gA7())j=k?"Gekozen! Tik op Volgende kaart voor een nieuw dilemma.":"Chosen! Tap Next card for a new dilemma."
+switch(j.a.a){case 0:if(j.b.length===1){if(j.gA7())j=k?"Gekozen! Tik op de andere kaart om te wisselen, of op Volgende kaart.":"Chosen! Tap the other card to switch, or Next card."
 else j=k?"Tik op A of B, of blader verder.":"Tap A or B, or browse on."
 return j}s=j.gFP()
 if(s==null){r=n.w.gaut()
@@ -140823,7 +140825,7 @@ else l=p
 p=r&&!m.e?i.c.bqh(a):B.D
 o=i.c
 n=r&&m.e&&o.r.h(0,0)===a
-r=r||i.w==null?null:new A.bjt(i,a)
+r=r&&!m.e||i.w==null?null:new A.bjt(i,a)
 return new A.VT(b,k,j,s,q,l,p,o.b,i.d,n,i.f,r,h,null)},
 $S:611}
 A.bjt.prototype={
