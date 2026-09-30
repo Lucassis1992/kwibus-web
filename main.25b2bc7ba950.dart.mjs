@@ -654,7 +654,7 @@ class CompiledApp {
                Object.prototype.toString.call(process) == "[object process]" &&
                process.platform == "win32"
       },
-      nJ: (x0,x1,x2) => x0.setItem(x1,x2),
+      nJ: (x0,x1) => x0.removeItem(x1),
       nK: () => globalThis.document,
       o: (x0,x1,x2,x3) => x0.addEventListener(x1,x2,x3),
       oB: Function.prototype.call.bind(DataView.prototype.setInt16),
@@ -676,7 +676,7 @@ class CompiledApp {
         }
         return null;
       },
-      oJ: (x0,x1) => x0.removeItem(x1),
+      oJ: (x0,x1,x2) => x0.setItem(x1,x2),
       oK: x0 => x0.length,
       p: b => !!b,
       pB: Function.prototype.call.bind(DataView.prototype.setUint16),

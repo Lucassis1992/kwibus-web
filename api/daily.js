@@ -16,6 +16,7 @@ const GAMES = {
   kroontjes: [2000, 1e7],
   tegelberg: [5000, 1e7],
   evenwicht: [2000, 1e7],
+  plaatsdelict: [10000, 1e7],
   woordje: [1, 6],
   groepjes: [0, 3],
 };
