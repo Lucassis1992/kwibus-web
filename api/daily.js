@@ -19,6 +19,11 @@ const GAMES = {
   plaatsdelict: [10000, 1e7],
   woordje: [1, 6],
   groepjes: [0, 3],
+  // Since 1.1: four more timed dailies (milliseconds, like sudoku).
+  mijnenveger: [3000, 1e7],
+  nonogram: [5000, 1e7],
+  woordzoeker: [5000, 1e7],
+  buizen: [2000, 1e7],
 };
 const ID = /^[a-z0-9]{8,32}$/;
 const TOP = 10;
