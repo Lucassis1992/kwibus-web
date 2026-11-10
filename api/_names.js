@@ -28,6 +28,7 @@ export const names = {
   "reversi": "Reversi",
   "schaken": "Schaken",
   "schuiven": "Schuiven",
+  "scoreblok": "Scoreteller",
   "solitaire": "Solitaire",
   "stapelaar": "Stapelaar",
   "sudoku": "Sudoku",
